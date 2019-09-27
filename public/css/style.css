@@ -1,0 +1,36 @@
+
+body{
+    background-color: #042B86;
+}
+
+.centered-form{
+    background-color: lightblue ;
+    margin: auto;
+    margin-top : 15% ; 
+    width: 15%;
+    height: 300px ;
+    border: 3px solid #73AD21;
+    padding: 20px;
+  }
+
+#login_form
+{
+    margin-top : 0  ; 
+    text-align: center;
+    padding:0px;
+}
+
+button{
+    background-color: lightgreen ;
+    color : blue; 
+    margin:auto;
+    display:block;
+    width : 75%;
+    height : 70px;
+    font-size : 16px;
+}
+
+#super_user{
+    background-color: #121ABD ;
+    color : white;
+}

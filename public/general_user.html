@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+        <script src="/socket.io/socket.io.js"></script>
+
+        <style> 
+            #video { 
+                border: 1px solid #999; 
+                width: 98%; 
+                max-width: 860px; 
+                } 
+            .error { color: red; } 
+            .warn { color: orange; } 
+            .info { color: darkgreen; } 
+            
+            #mouse{
+                width : 200px;
+            }
+        </style> 
+
+
+
+       
+    </head>
+
+    <body>
+
+        Capture video 
+
+        <p id='prova'>This example shows you the contents of the selected part of your display. Click the Start Capture button to begin.</p> 
+
+        <div id='mouse' >
+        <img id="play">
+        </div>
+        <div id="logger" ></div>
+
+        <script>
+            var socket = io()
+            socket.on('stream_server' , function(image){
+                var img = document.getElementById("play")
+                img.src=image
+                document.getElementById('logger').innerHTML=image;
+                console.log('a')
+                console.log('b')
+            })
+
+            document.getElementById('mouse').addEventListener('mousemove' , (e) => {
+                console.log(e.screenX + ";" + e.screenY)
+                socket.emit('send_mouse' , e.screenX , e.screenY)
+            })
+
+        </script>
+
+    </body>
+
+</html>

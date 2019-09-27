@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+        <style> 
+            #video { 
+                border: 1px solid #999; 
+                width: 98%; 
+                max-width: 860px; 
+                } 
+            .error { color: red; } 
+            .warn { color: orange; } 
+            .info { color: darkgreen; } 
+        </style> 
+
+
+       
+    </head>
+
+    <body>
+
+        Chat App
+        <!--<button id='increment'></button>-->
+
+        <div id="messages">
+
+        </div>
+
+        <form id='message-form'>
+            <input name ="message" placeholder="Message">
+            <button>Send</button>
+
+        </form>
+        <button id="send-location">Send location</button>
+
+        <script id="message-template" type="text/html">
+            <div>
+                <p>{{message}}</p>
+
+            </div>
+        </script>
+
+        
+        <script id="message-template-location" type="text/html">
+            <div>
+                <p><a href="{{url}}" target="_blank"> My current location</a></p><!-- to open in a new window-->
+
+
+            </div>
+        </script>
+
+        <p>This example shows you the contents of the selected part of your display. Click the Start Capture button to begin.</p> 
+        <p><button id="start">Start Capture</button>&nbsp;<button id="stop">Stop Capture</button></p> 
+        <video id="video" autoplay></video> 
+        <br> 
+        <strong>LogG:</strong> 
+        <br>
+        <pre id="log"></pre> 
+
+        <button id="tryIt">Try it</button>
+        
+        <canvas id="preview" ></canvas> </canvas>
+        <script type="text/javascript">
+            var canvas = document.getElementById('preview')
+            var context = canvas.getContext('2d')
+
+            canvas.width = 800 
+            canvas.height = 600
+
+            context.width = canvas.width 
+            context.height = canvas.height
+
+            var socket = io()
+        </script>
+        <br>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+        
+        <script src="/js/chat.js"></script>
+
+    </body>
+
+</html>
