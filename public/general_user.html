@@ -29,26 +29,26 @@
 
         Capture video 
 
-        <p id='prova'>This example shows you the contents of the selected part of your display. Click the Start Capture button to begin.</p> 
+        <p id="prova">This example shows you the contents of the selected part of your display. Click the Start Capture button to begin.</p> 
 
-        <div id='mouse' >
+        <div id="mouse" >
         <img id="play">
         </div>
         <div id="logger" ></div>
 
         <script>
             var socket = io()
-            socket.on('stream_server' , function(image){
+            socket.on("stream_server" , function(image){
                 var img = document.getElementById("play")
                 img.src=image
-                document.getElementById('logger').innerHTML=image;
-                console.log('a')
-                console.log('b')
+                document.getElementById("logger").innerHTML=image;
+                console.log("a")
+                console.log("b")
             })
 
-            document.getElementById('mouse').addEventListener('mousemove' , (e) => {
+            document.getElementById("mouse").addEventListener("mousemove" , (e) => {
                 console.log(e.screenX + ";" + e.screenY)
-                socket.emit('send_mouse' , e.screenX , e.screenY)
+                socket.emit("send_mouse" , e.screenX , e.screenY)
             })
 
         </script>
