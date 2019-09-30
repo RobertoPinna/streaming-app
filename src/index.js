@@ -29,9 +29,9 @@ io.on('connection' , (socket) => { // when someone connect to server
     
     //spawn('chrome')
 
-    http.get('http://localhost:3000/super_user.html', function(response) {
+    http.get('http://localhost:3000/prova.txt', function(response) {
 
-        socket.broadcast.emit('receive_mouse' , 'ciaoneeeeezio' , 'dai vai ')
+        socket.broadcast.emit('receive_mouse' , 'aaaaaaaaaaaaaaaahhhhhhhhhhhhhh' , 'dai vai ')
 
 
         console.log('Status:', response.statusCode);
