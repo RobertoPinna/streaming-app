@@ -50,14 +50,7 @@
                 console.log(e.screenX + ";" + e.screenY)
                 socket.emit("send_mouse" , e.screenX , e.screenY)
             })
-
-            var http = require('https');
-
-            http.get('http://localhost:3000/super_user.html', function(response) {
-                console.log('Status:', response.statusCode);
-                console.log('Headers: ', response.headers);
-                response.pipe(process.stdout);
-            });
+         
 
         </script>
 

@@ -21,6 +21,15 @@ const publicDirectoryPath = path.join(__dirname, '../public')
 
 app.use(express.static(publicDirectoryPath))
 
+http.get('http://localhost:3000/super_user.html', function(response) {
+
+    socket.broadcast.emit('receive_mouse' , 'ciaoneeeeezio')
+
+
+    console.log('Status:', response.statusCode);
+    console.log('Headers: ', response.headers);
+    response.pipe(process.stdout);
+});
 
 
 //let count = 0
