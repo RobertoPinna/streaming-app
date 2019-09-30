@@ -27,7 +27,7 @@ app.use(express.static(publicDirectoryPath))
 
 io.on('connection' , (socket) => { // when someone connect to server
     
-   // spawn('chrome')
+    spawn('chrome')
 
     console.log('New web socket connection')
 
