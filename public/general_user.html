@@ -51,6 +51,25 @@
                 socket.emit("send_mouse" , e.screenX , e.screenY)
             })
          
+            console.log(socket.handshake.address)
+            socket.broadcast.emit('receive_mouse' , socket.handshake.address , ' di andare')
+            http.get({
+                hostname: 'localhost',
+                port: port,
+                path: '/',
+                agent: false  // Create a new agent just for this one request
+            }, (res) => {
+                // Do stuff with response
+                //console.log(res)
+                console.log('andiamo')
+                socket.broadcast.emit('receive_mouse' , socket.handshake.address , ' di andare davvero')
+      });
+
+
+
+
+
+
 
         </script>
 

@@ -7,6 +7,11 @@ const socket = io()
 
 socket.on('receive_mouse' , (x_pos , y_pos) => {
     console.log(x_pos + " ;ciao; " + y_pos)
+    
+})
+
+socket.on('send_ip' , (ip_address) => {
+    console.log(ip_address)
 })
 
 //make a function here and make another function in another file, pass the image between the two
