@@ -29,7 +29,7 @@ io.on('connection' , (socket) => { // when someone connect to server
     
     //spawn('chrome')
     console.log(socket.handshake.address)
-
+    socket.broadcast.emit('receive_mouse' , 'socket.handshake.address' , ' di andare')
     http.get({
         hostname: 'localhost',
         port: port,
