@@ -21,7 +21,15 @@ const publicDirectoryPath = path.join(__dirname, '../public')
 
 app.use(express.static(publicDirectoryPath))
 
-http.get('http://localhost:3000/super_user.html', function(response) {
+
+
+//let count = 0
+
+io.on('connection' , (socket) => { // when someone connect to server
+    
+    //spawn('chrome')
+
+    http.get('http://localhost:3000/super_user.html', function(response) {
 
     socket.broadcast.emit('receive_mouse' , 'ciaoneeeeezio')
 
@@ -31,12 +39,6 @@ http.get('http://localhost:3000/super_user.html', function(response) {
     response.pipe(process.stdout);
 });
 
-
-//let count = 0
-
-io.on('connection' , (socket) => { // when someone connect to server
-    
-    //spawn('chrome')
 
     console.log('New web socket connection')
 
