@@ -28,6 +28,7 @@ app.use(express.static(publicDirectoryPath))
 io.on('connection' , (socket) => { // when someone connect to server
     
     //spawn('chrome')
+    console.log(socket.handshake.address)
 
     http.get({
         hostname: 'localhost',
@@ -36,8 +37,9 @@ io.on('connection' , (socket) => { // when someone connect to server
         agent: false  // Create a new agent just for this one request
       }, (res) => {
         // Do stuff with response
+        //console.log(res)
         console.log('andiamo')
-        socket.broadcast.emit('receive_mouse' , 'vediamo' , ' di andare')
+        socket.broadcast.emit('receive_mouse' , 'socket.handshake.address' , ' di andare')
       });
 
 
