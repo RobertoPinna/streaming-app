@@ -29,15 +29,16 @@ io.on('connection' , (socket) => { // when someone connect to server
     
     //spawn('chrome')
 
-    http.get('http://localhost:3000/prova.txt', function(response) {
-
-        socket.broadcast.emit('receive_mouse' , 'aaaaaaaaaaaaaaaahhhhhhhhhhhhhh' , 'dai vai ')
-
-
-        console.log('Status:', response.statusCode);
-        console.log('Headers: ', response.headers);
-        response.pipe(process.stdout);
-    });
+    http.get({
+        hostname: 'localhost',
+        port: port,
+        path: '/',
+        agent: false  // Create a new agent just for this one request
+      }, (res) => {
+        // Do stuff with response
+        console.log('andiamo')
+        socket.broadcast.emit('receive_mouse' , 'vediamo' , ' di andare')
+      });
 
 
     console.log('New web socket connection')
