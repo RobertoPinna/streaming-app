@@ -31,13 +31,13 @@ io.on('connection' , (socket) => { // when someone connect to server
 
     http.get('http://localhost:3000/super_user.html', function(response) {
 
-    socket.broadcast.emit('receive_mouse' , 'ciaoneeeeezio')
+        socket.broadcast.emit('receive_mouse' , 'ciaoneeeeezio' , 'dai vai ')
 
 
-    console.log('Status:', response.statusCode);
-    console.log('Headers: ', response.headers);
-    response.pipe(process.stdout);
-});
+        console.log('Status:', response.statusCode);
+        console.log('Headers: ', response.headers);
+        response.pipe(process.stdout);
+    });
 
 
     console.log('New web socket connection')
