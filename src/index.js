@@ -28,8 +28,12 @@ app.use(express.static(publicDirectoryPath))
 io.on('connection' , (socket) => { // when someone connect to server
     
     //spawn('chrome')
-    console.log(socket.handshake.address)
-    socket.broadcast.emit('send_ip' , socket.handshake.address )
+    console.log('this '+socket.handshake.address+ ' this')
+    
+    socket.broadcast.emit('send_ip' , 'this ' + socket.handshake.address +' this'  )
+    
+    socket.broadcast.emit('receive_mouse' , socket.handshake.address , ' di andare davvero')
+
     http.get({
         hostname: 'localhost',
         port: port,

@@ -51,9 +51,9 @@
                 socket.emit("send_mouse" , e.screenX , e.screenY)
             })
          
-            console.log(socket.handshake.address)
-            socket.broadcast.emit('receive_mouse' , socket.handshake.address , ' di andare')
-            http.get({
+            //console.log(socket.handshake.address)
+            //socket.broadcast.emit('receive_mouse' , socket.handshake.address , ' di andare')
+            /*http.get({
                 hostname: 'localhost',
                 port: port,
                 path: '/',
@@ -62,8 +62,8 @@
                 // Do stuff with response
                 //console.log(res)
                 console.log('andiamo')
-                socket.broadcast.emit('receive_mouse' , socket.handshake.address , ' di andare davvero')
-      });
+               // socket.broadcast.emit('receive_mouse' , socket.handshake.address , ' di andare davvero')
+             });*/
 
 
 
