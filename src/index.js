@@ -19,6 +19,8 @@ const io = socketio(server)
 const port = process.env.PORT || 3000
 const publicDirectoryPath = path.join(__dirname, '../public')
 
+var flag = 0
+
 app.use(express.static(publicDirectoryPath))
 
 
@@ -28,12 +30,7 @@ app.use(express.static(publicDirectoryPath))
 io.on('connection' , (socket) => { // when someone connect to server
     
     //spawn('chrome')
-    console.log('this '+socket.handshake.address+ ' this')
-    
-    socket.broadcast.emit('send_ip' , 'this ' + socket.handshake.address +' this'  )
-    
-    socket.broadcast.emit('receive_mouse' , socket.handshake.address , ' di andare per davvero')
-
+ 
     http.get({
         hostname: 'localhost',
         port: port,
@@ -43,20 +40,27 @@ io.on('connection' , (socket) => { // when someone connect to server
         // Do stuff with response
         //console.log(res)
         console.log('andiamo')
-        socket.broadcast.emit('receive_mouse' , socket.handshake.address , ' di andare davvero')
+        //socket.broadcast.emit('receive_mouse' , socket.handshake.address , ' di andare davvero')
       });
 
 
     console.log('New web socket connection')
 
     socket.on('stream' , (image) => {
-        console.log('c')
+        //console.log('c')
         socket.broadcast.emit('stream_server', image)
-        console.log('d')
+        //console.log('d')
     })
 
     socket.on('send_mouse' , (x_pos , y_pos) => {
         socket.broadcast.emit('receive_mouse' , x_pos , y_pos)
+        socket.broadcast.emit('check_ip')
+        
+    })
+
+    socket.on('get_ip' , () => {
+        console.log('lo getto o no?!?!')
+        socket.emit('print_ip' , ('qui sono '+ socket.handshake.address+ ' qua sono') )
     })
    
     socket.on('disconnect' , () => {

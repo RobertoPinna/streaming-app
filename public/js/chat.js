@@ -5,10 +5,21 @@
 
 const socket = io()
 
+var ip = ''
+
 socket.on('receive_mouse' , (x_pos , y_pos) => {
     console.log(x_pos + " ;ciao; " + y_pos)
 })
 
+var flag = 0 
+
+if ( flag == 0 ){
+    socket.emit('get_ip' )
+}
+
+socket.on('check_ip' , () => {
+     socket.emit('get_ip')
+})
 
 
 //make a function here and make another function in another file, pass the image between the two
@@ -22,12 +33,15 @@ var canvas = document.getElementById('preview')
 var context = canvas.getContext('2d')
 
 
-socket.on('send_ip' , (ip_address) => {
-    console.log(ip_address)
-    logElem.innerHTML = ip_address
+
+socket.on('print_ip' , (ip_address) => {
+    if(ip != ip_address){
+        console.log(ip_address)
+        ip = ip_address
+        logElem.innerHTML = ip_address
+    }
 })
 
-socket.emit('sending_ip' , ' this ' )
 
 canvas.width = 850 
 canvas.height = 600
@@ -82,10 +96,10 @@ var displayMediaOptions = {
             } , 75 )
 
             let supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
-            for(e in supportedConstraints)
-                console.log(e)
+            //for(e in supportedConstraints)
+               // console.log(e)
 
-            dumpOptionsInfo(); 
+            //dumpOptionsInfo(); 
         } catch(err) { 
             console.error("Error: " + err); 
         } 
