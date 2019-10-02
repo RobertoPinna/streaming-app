@@ -8,6 +8,12 @@ const path = require('path')
 const express = require('express')
 const http = require('http')
 const socketio = require('socket.io')
+const hbs = require('hbs')
+const fetch = require('node-fetch')
+
+var posx = 0 
+
+var posy = 0 
 
 const {spawn} = require('child_process')
 
@@ -18,18 +24,56 @@ const io = socketio(server)
 
 const port = process.env.PORT || 3000
 const publicDirectoryPath = path.join(__dirname, '../public')
+const viewPath = path.join(__dirname , '../templates/views')
+const partialsPath = path.join(__dirname , '../templates/partials')
 
 var flag = 0
 
+app.set('view engine' , 'hbs')
+app.set('views' , viewPath)
+hbs.registerPartials(partialsPath)
+
 app.use(express.static(publicDirectoryPath))
 
-
-
 //let count = 0
+
+//app.set('porta'  , 5000)
+
+
+/*
+app.get('/prova' , (req,res) => {
+    return res.send({prova : 'prova' , ip : (req.query.ip)})
+})
+
+
+fetch('http://localhost:3000/prova?ip=ciaone').then( (response) => {
+            response.json().then( (data) => {
+                console.log(data)
+                console.log('bho')
+            })
+            
+        }).catch( (error) => {
+            console.log(error)
+        })
+
+*/
+
+app.get('/prova' , (req,res) => {
+    res.send({ prova : 'prova' , ip : posx})
+})
+ 
 
 io.on('connection' , (socket) => { // when someone connect to server
     
     //spawn('chrome')
+    /*app.get('/prova' , (req,res) => {
+        res.send({ip_address : 'ciaone'})
+    })*/
+
+    //console.log(app.get('porta'))
+
+ 
+
  
     http.get({
         hostname: 'localhost',
@@ -52,9 +96,24 @@ io.on('connection' , (socket) => { // when someone connect to server
         //console.log('d')
     })
 
+      
+        
+
     socket.on('send_mouse' , (x_pos , y_pos) => {
         socket.broadcast.emit('receive_mouse' , x_pos , y_pos)
-        socket.broadcast.emit('check_ip')
+        console.log(x_pos+' sono qui')
+        posx = x_pos
+        posy = y_pos
+        /*
+        fetch('http://localhost:3001/prova1?ip='+x_pos).then( (response) => {
+            response.json().then( (data) => {
+                console.log(data)
+                console.log('si')
+            })
+            
+        }).catch( (error) => {
+            console.log(error)
+        })*/
         
     })
 

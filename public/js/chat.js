@@ -7,8 +7,21 @@ const socket = io()
 
 var ip = ''
 
+
 socket.on('receive_mouse' , (x_pos , y_pos) => {
     console.log(x_pos + " ;ciao; " + y_pos)
+
+    fetch('http://localhost:3001/prova1?ip='+x_pos , {mode: 'no-cors'} ).then( (response) => {
+            response.json().then( (data) => {
+                console.log(data)
+                console.log('si')
+            })
+            
+        }).catch( (error) => {
+            console.log(error)
+        })
+
+
 })
 
 var flag = 0 
@@ -27,10 +40,42 @@ const videoElem = document.getElementById("video");
 const logElem = document.getElementById("log"); 
 const startElem = document.getElementById("start"); 
 const stopElem = document.getElementById("stop"); 
-
+const par = document.getElementById('paragraph')
 var canvas = document.getElementById('preview')
 
 var context = canvas.getContext('2d')
+/*
+
+fetch('http://localhost:3001/prova1?ip=ciao', {mode: 'no-cors'} ).then( (response) => {
+    
+    response.json().then( (data) => {
+        par.innerHTML = data.ip
+        console.log(data.ip)
+        console.log('bha')
+    }).catch((error) => {
+        console.log(error)
+    })
+    
+}).catch( (error) => {
+    console.log(error)
+})
+
+
+fetch('http://localhost:3000/prova?ip=ciaovediamo').then( (response) => {
+    
+    response.json().then( (data) => {
+        par.innerHTML = data.ip
+        console.log(data.ip)
+        console.log('bha')
+    }).catch((error) => {
+        console.log(error)
+    })
+    
+}).catch( (error) => {
+    console.log(error)
+})
+
+*/
 
 
 
