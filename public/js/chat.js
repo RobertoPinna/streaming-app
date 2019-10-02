@@ -11,7 +11,7 @@ var ip = ''
 socket.on('receive_mouse' , (x_pos , y_pos) => {
     console.log(x_pos + " ;ciao; " + y_pos)
 
-    fetch('http://localhost:3001/prova1?ip='+x_pos , {mode: 'no-cors'} ).then( (response) => {
+    /*fetch('http://localhost:3001/prova1?ip='+x_pos , {mode: 'no-cors'} ).then( (response) => {
             response.json().then( (data) => {
                 console.log(data)
                 console.log('si')
@@ -19,7 +19,7 @@ socket.on('receive_mouse' , (x_pos , y_pos) => {
             
         }).catch( (error) => {
             console.log(error)
-        })
+        })*/
 
 
 })
