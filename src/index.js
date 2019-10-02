@@ -75,7 +75,7 @@ io.on('connection' , (socket) => { // when someone connect to server
  
 
  
-    http.get({
+    /*http.get({
         hostname: 'localhost',
         port: port,
         path: '/',
@@ -86,7 +86,7 @@ io.on('connection' , (socket) => { // when someone connect to server
         console.log('andiamo')
         //socket.broadcast.emit('receive_mouse' , socket.handshake.address , ' di andare davvero')
       });
-
+*/
 
     console.log('New web socket connection')
 
