@@ -8,8 +8,7 @@ const path = require('path')
 const express = require('express')
 const http = require('http')
 const socketio = require('socket.io')
-const hbs = require('hbs')
-const fetch = require('node-fetch')
+
 
 var posx = 0 
 
@@ -25,7 +24,6 @@ const io = socketio(server)
 const port = process.env.PORT || 3000
 const publicDirectoryPath = path.join(__dirname, '../public')
 const viewPath = path.join(__dirname , '../templates/views')
-const partialsPath = path.join(__dirname , '../templates/partials')
 
 var flag = 0
 
@@ -55,12 +53,13 @@ fetch('http://localhost:3000/prova?ip=ciaone').then( (response) => {
             console.log(error)
         })
 
-*/
+
 
 app.get('/prova' , (req,res) => {
     res.send({ prova : 'prova' , ip : posx})
 })
  
+*/
 
 io.on('connection' , (socket) => { // when someone connect to server
     
