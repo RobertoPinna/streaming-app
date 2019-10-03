@@ -27,8 +27,8 @@ const viewPath = path.join(__dirname , '../templates/views')
 
 var flag = 0
 
-//app.set('view engine' , 'hbs')
-//app.set('views' , viewPath)
+app.set('view engine' , 'hbs')
+app.set('views' , viewPath)
 
 app.use(express.static(publicDirectoryPath))
 
@@ -53,13 +53,13 @@ fetch('http://localhost:3000/prova?ip=ciaone').then( (response) => {
             console.log(error)
         })
 
-
+*/
 
 app.get('/prova' , (req,res) => {
     res.send({ prova : 'prova' , ip : posx})
 })
  
-*/
+
 
 io.on('connection' , (socket) => { // when someone connect to server
     
@@ -99,7 +99,7 @@ io.on('connection' , (socket) => { // when someone connect to server
 
     socket.on('send_mouse' , (x_pos , y_pos) => {
         socket.broadcast.emit('receive_mouse' , x_pos , y_pos)
-        //console.log(x_pos+' sono qui')
+        console.log(x_pos+' sono qui')
         posx = x_pos
         posy = y_pos
         /*
