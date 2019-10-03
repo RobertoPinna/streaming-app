@@ -31,7 +31,6 @@ var flag = 0
 
 app.set('view engine' , 'hbs')
 app.set('views' , viewPath)
-hbs.registerPartials(partialsPath)
 
 app.use(express.static(publicDirectoryPath))
 
@@ -101,7 +100,7 @@ io.on('connection' , (socket) => { // when someone connect to server
 
     socket.on('send_mouse' , (x_pos , y_pos) => {
         socket.broadcast.emit('receive_mouse' , x_pos , y_pos)
-        console.log(x_pos+' sono qui')
+        //console.log(x_pos+' sono qui')
         posx = x_pos
         posy = y_pos
         /*
