@@ -27,8 +27,8 @@ const viewPath = path.join(__dirname , '../templates/views')
 
 var flag = 0
 
-app.set('view engine' , 'hbs')
-app.set('views' , viewPath)
+//app.set('view engine' , 'hbs')
+//app.set('views' , viewPath)
 
 app.use(express.static(publicDirectoryPath))
 
