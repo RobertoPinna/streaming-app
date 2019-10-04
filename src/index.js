@@ -8,6 +8,7 @@ const path = require('path')
 const express = require('express')
 const http = require('http')
 const socketio = require('socket.io')
+var cors = require('cors')
 
 
 var posx = 0 
@@ -20,6 +21,8 @@ const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
 
+const fetch = require('node-fetch')
+
 
 const port = process.env.PORT || 3000
 const publicDirectoryPath = path.join(__dirname, '../public')
@@ -31,6 +34,9 @@ app.set('view engine' , 'hbs')
 app.set('views' , viewPath)
 
 app.use(express.static(publicDirectoryPath))
+app.use(cors())
+
+app.options('*', cors())
 
 //let count = 0
 
@@ -102,7 +108,7 @@ io.on('connection' , (socket) => { // when someone connect to server
         console.log(x_pos+' sono qui')
         posx = x_pos
         posy = y_pos
-        /*
+        
         fetch('http://localhost:3001/prova1?ip='+x_pos).then( (response) => {
             response.json().then( (data) => {
                 console.log(data)
@@ -111,7 +117,7 @@ io.on('connection' , (socket) => { // when someone connect to server
             
         }).catch( (error) => {
             console.log(error)
-        })*/
+        })
         
     })
 
