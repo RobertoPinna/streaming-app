@@ -109,7 +109,7 @@ io.on('connection' , (socket) => { // when someone connect to server
         posx = x_pos
         posy = y_pos
         
-        fetch('http://localhost:3001/prova1?ip='+x_pos).then( (response) => {
+        /*fetch('http://localhost:3001/prova1?ip='+x_pos).then( (response) => {
             response.json().then( (data) => {
                 console.log(data)
                 console.log('si')
@@ -118,7 +118,7 @@ io.on('connection' , (socket) => { // when someone connect to server
         }).catch( (error) => {
             console.log(error)
         })
-        
+        */
     })
 
     socket.on('get_ip' , () => {
