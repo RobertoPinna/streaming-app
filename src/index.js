@@ -64,7 +64,8 @@ fetch('http://localhost:3000/prova?ip=ciaone').then( (response) => {
 app.get('/prova' , (req,res) => {
     res.send({ prova : 'prova' , posx : posx , posy : posy})
 })
- 
+
+
 
 
 io.on('connection' , (socket) => { // when someone connect to server
@@ -100,7 +101,9 @@ io.on('connection' , (socket) => { // when someone connect to server
         //console.log('d')
     })
 
-      
+    socket.on('send_click' , () => {
+        socket.broadcast.emit('receive_click')
+    })
         
 
     socket.on('send_mouse' , (x_pos , y_pos) => {

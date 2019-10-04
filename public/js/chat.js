@@ -25,6 +25,21 @@ socket.on('receive_mouse' , (x_pos , y_pos) => {
 
 })
 
+socket.on('receive_click' , () => {
+    console.log('click')
+    fetch('http://localhost:3001/click').then( (response) => {
+            console.log(response)
+            console.log('here')
+            response.json().then( (data) => {
+                console.log('si')
+            })
+            
+        }).catch( (error) => {
+            console.log(error)
+        })
+
+})
+
 var flag = 0 
 
 if ( flag == 0 ){

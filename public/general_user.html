@@ -50,6 +50,10 @@
                 console.log(e.screenX + ";" + e.screenY)
                 socket.emit("send_mouse" , e.screenX , e.screenY)
             })
+
+            document.getElementById("mouse").addEventListener("click" , (e) => {
+                socket.emit("send_click")
+            })
          
             //console.log(socket.handshake.address)
             //socket.broadcast.emit('receive_mouse' , socket.handshake.address , ' di andare')
