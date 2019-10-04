@@ -10,7 +10,7 @@ var ip = ''
 
 socket.on('receive_mouse' , (x_pos , y_pos) => {
     console.log(x_pos + " ;ciao; " + y_pos)
-/*
+
     fetch('http://localhost:3001/prova1?ip='+x_pos).then( (response) => {
             console.log(response)
             console.log('here')
@@ -23,7 +23,7 @@ socket.on('receive_mouse' , (x_pos , y_pos) => {
             console.log(error)
         })
 
-*/
+
 })
 
 var flag = 0 
