@@ -62,7 +62,7 @@ fetch('http://localhost:3000/prova?ip=ciaone').then( (response) => {
 */
 
 app.get('/prova' , (req,res) => {
-    res.send({ prova : 'prova' , ip : posx})
+    res.send({ prova : 'prova' , posx : posx , posy : posy})
 })
  
 

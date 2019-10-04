@@ -15,7 +15,6 @@ socket.on('receive_mouse' , (x_pos , y_pos) => {
             console.log(response)
             console.log('here')
             response.json().then( (data) => {
-                console.log(data)
                 console.log('si')
             })
             
