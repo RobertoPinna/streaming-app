@@ -38,6 +38,9 @@
 
         <script>
             var socket = io()
+            var window_height = 0
+            var window_width = 0 
+
             socket.on("stream_server" , function(image){
                 var img = document.getElementById("play")
                 img.src=image
@@ -46,34 +49,21 @@
                 //console.log("b")
             })
 
+            socket.on('receive_h_w' , (wi_height , wi_width ) => {
+                window_height = wi_height 
+                window_width = wi_width
+            })
+
             document.getElementById("mouse").addEventListener("mousemove" , (e) => {
                 console.log(e.screenX + ";" + e.screenY)
-                socket.emit("send_mouse" , e.screenX , e.screenY)
+                if(e.screenX <= window_height && e.screenY <= woindow_width)
+                    socket.emit("send_mouse" , e.screenX , e.screenY)
             })
 
             document.getElementById("mouse").addEventListener("click" , (e) => {
                 socket.emit("send_click")
             })
          
-            //console.log(socket.handshake.address)
-            //socket.broadcast.emit('receive_mouse' , socket.handshake.address , ' di andare')
-            /*http.get({
-                hostname: 'localhost',
-                port: port,
-                path: '/',
-                agent: false  // Create a new agent just for this one request
-            }, (res) => {
-                // Do stuff with response
-                //console.log(res)
-                console.log('andiamo')
-               // socket.broadcast.emit('receive_mouse' , socket.handshake.address , ' di andare davvero')
-             });*/
-
-
-
-
-
-
 
         </script>
 

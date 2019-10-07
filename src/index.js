@@ -95,6 +95,10 @@ io.on('connection' , (socket) => { // when someone connect to server
 
     console.log('New web socket connection')
 
+    socket.on('send_h_w' , (window_height , window_width) => { 
+        socket.broadcast('receive_h_w' , window_height , window_width )
+    })
+
     socket.on('stream' , (image) => {
         //console.log('c')
         socket.broadcast.emit('stream_server', image)

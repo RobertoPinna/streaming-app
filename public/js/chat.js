@@ -60,40 +60,6 @@ const par = document.getElementById('paragraph')
 var canvas = document.getElementById('preview')
 
 var context = canvas.getContext('2d')
-/*
-
-fetch('http://localhost:3001/prova1?ip=ciao', {mode: 'no-cors'} ).then( (response) => {
-    
-    response.json().then( (data) => {
-        par.innerHTML = data.ip
-        console.log(data.ip)
-        console.log('bha')
-    }).catch((error) => {
-        console.log(error)
-    })
-    
-}).catch( (error) => {
-    console.log(error)
-})
-
-
-fetch('http://localhost:3000/prova?ip=ciaovediamo').then( (response) => {
-    
-    response.json().then( (data) => {
-        par.innerHTML = data.ip
-        console.log(data.ip)
-        console.log('bha')
-    }).catch((error) => {
-        console.log(error)
-    })
-    
-}).catch( (error) => {
-    console.log(error)
-})
-
-*/
-
-
 
 socket.on('print_ip' , (ip_address) => {
     if(ip != ip_address){
@@ -136,7 +102,7 @@ var displayMediaOptions = {
     console.log = msg => logElem.innerHTML += `${msg}<br>`;
     console.error = msg => logElem.innerHTML += `<span class="error">${msg}</span><br>`; 
     console.warn = msg => logElem.innerHTML += `<span class="warn">${msg}<span><br>`; 
-    console.info = msg => logElem.innerHTML += `<span class="info">${msg}</span><br>`;
+    console.info = msg => logElem.innerHTML += `<span class="info">${msg}</span><br>`; 
 
     function viewVideo(video , context){
 
@@ -151,16 +117,23 @@ var displayMediaOptions = {
             const videoTry = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions); 
             videoElem.srcObject = videoTry
 
+            const window_height = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().height, null , 2 ) 
+            const window_width = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().width , null , 2 ) 
+
+            socket.emit('send_h_w' , window_height , window_width)
+
             setInterval( () => {
                 //if(context)
                     viewVideo(videoElem , context )
             } , 75 )
 
-            let supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
+            //let supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
             //for(e in supportedConstraints)
                // console.log(e)
 
-            //dumpOptionsInfo(); 
+            //dumpOptionsInfo() 
+           
+
         } catch(err) { 
             console.error("Error: " + err); 
         } 
@@ -179,7 +152,6 @@ var displayMediaOptions = {
         console.info(videoTrack) 
         console.info("Track settings:"); 
         console.info(JSON.stringify(videoTrack.getSettings(), null, 2)); 
-        videoTrack.getSettings().deviceId = "window:132224:0"
         console.info("Track constraints:"); 
         console.info(JSON.stringify(videoTrack.getConstraints(), null, 2)); 
     }
