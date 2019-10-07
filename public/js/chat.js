@@ -118,8 +118,8 @@ var displayMediaOptions = {
             videoElem.srcObject = videoTry
             
             const video_constraints = {
-                width: 640,
-                height:  480
+                width: 1280 ,
+                height:  720
             }
             videoElem.srcObject.getVideoTracks()[0].applyConstraints(video_constraints)
 
