@@ -116,6 +116,12 @@ var displayMediaOptions = {
         try { 
             const videoTry = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions); 
             videoElem.srcObject = videoTry
+            
+            const video_constraints = {
+                width: {min: 640, ideal: 1280},
+                height: {min: 480, ideal: 720}
+            }
+            videoElem.srcObject.getVideoTracks()[0].applyConstraints(video_constraints)
 
             const window_height = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().height, null , 2 ) 
             const window_width = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().width , null , 2 ) 
