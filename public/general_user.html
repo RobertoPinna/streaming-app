@@ -56,8 +56,7 @@
 
             document.getElementById("mouse").addEventListener("mousemove" , (e) => {
                 console.log(e.screenX + ";" + e.screenY)
-                if(e.screenX <= window_height && e.screenY <= window_width)
-                    socket.emit("send_mouse" , e.screenX , e.screenY)
+                socket.emit("send_mouse" , window_height , window_height)
             })
 
             document.getElementById("mouse").addEventListener("click" , (e) => {
