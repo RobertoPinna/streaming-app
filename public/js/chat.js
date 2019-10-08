@@ -122,13 +122,12 @@ var displayMediaOptions = {
                 height:  720
             }
             //videoElem.srcObject.getVideoTracks()[0].applyConstraints(video_constraints)
-            console.log('speriamo : ' + JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().height, null, 2))
-            const window_height = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().height, null , 2 ) 
-            const window_width = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().width , null , 2 ) 
-            console.log(window_height + ' : che : ' + window_width)
-            socket.emit('send_h_w' , window_height , window_width)
-            const videoTrackk = videoElem.srcObject.getVideoTracks()[0]; 
-            console.info(JSON.stringify(videoTrackk.getSettings(), null, 2)); 
+            
+            //const window_height = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().height, null , 2 ) 
+            //const window_width = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().width , null , 2 ) 
+           
+            //socket.emit('send_h_w' , window_height , window_width)
+             
 
             setInterval( () => {
                 //if(context)
