@@ -125,7 +125,7 @@ var displayMediaOptions = {
 
             const window_height = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().height, null , 2 ) 
             const window_width = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().width , null , 2 ) 
-
+            console.log(window_height, window_width)
             socket.emit('send_h_w' , window_height , window_width)
 
             setInterval( () => {
