@@ -130,10 +130,7 @@ var displayMediaOptions = {
             }
             //videoElem.srcObject.getVideoTracks()[0].applyConstraints(video_constraints)
             
-            //const window_height = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().height, null , 2 ) 
-            //const window_width = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().width , null , 2 ) 
-           
-            //socket.emit('send_h_w' , window_height , window_width)
+            
              
 
             setInterval( () => {
@@ -146,13 +143,13 @@ var displayMediaOptions = {
                // console.log(e)
 
             setTimeout( () => {
-                dumpOptionsInfo() 
+                const window_height = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().height, null , 2 ) 
+                const window_width = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().width , null , 2 ) 
+           
+                socket.emit('send_h_w' , window_height , window_width)
                 console.log('qui settimeout')
             }, 1000)
             
-            
-
-            heightEl.click()
 
         } catch(err) { 
             console.error("Error: " + err); 
