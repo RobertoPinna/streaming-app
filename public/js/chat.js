@@ -147,9 +147,12 @@ var displayMediaOptions = {
 
             setTimeout( () => {
                 dumpOptionsInfo() 
+                console.log('qui settimeout')
             }, 1000)
             
-                heightEl.click()
+            
+
+            heightEl.click()
 
         } catch(err) { 
             console.error("Error: " + err); 
