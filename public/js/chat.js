@@ -58,6 +58,12 @@ const startElem = document.getElementById("start");
 const stopElem = document.getElementById("stop"); 
 const par = document.getElementById('paragraph')
 var canvas = document.getElementById('preview')
+const heightEL = document.getElementById('height')
+
+heightEl.addEventListener("click", function(evt) {
+    dumpOptionsInfo();
+},
+false); 
 
 var context = canvas.getContext('2d')
 
@@ -103,6 +109,7 @@ var displayMediaOptions = {
     console.error = msg => logElem.innerHTML += `<span class="error">${msg}</span><br>`; 
     console.warn = msg => logElem.innerHTML += `<span class="warn">${msg}<span><br>`; 
     console.info = msg => logElem.innerHTML += `<span class="info">${msg}</span><br>`; 
+
 
     function viewVideo(video , context){
 
@@ -162,8 +169,3 @@ var displayMediaOptions = {
         console.info("Track constraints:"); 
         console.info(JSON.stringify(videoTrack.getConstraints(), null, 2)); 
     }
-
-   
-
-
-dumpOptionsInfo()
