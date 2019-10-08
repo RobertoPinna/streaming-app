@@ -166,4 +166,4 @@ var displayMediaOptions = {
    
 
 
-
+dumpOptionsInfo()
