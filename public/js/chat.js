@@ -127,6 +127,8 @@ var displayMediaOptions = {
             const window_width = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().width , null , 2 ) 
             console.log(window_height + ' : che : ' + window_width)
             socket.emit('send_h_w' , window_height , window_width)
+            const videoTrackk = videoElem.srcObject.getVideoTracks()[0]; 
+            console.info(JSON.stringify(videoTrackk.getSettings(), null, 2)); 
 
             setInterval( () => {
                 //if(context)
@@ -137,7 +139,7 @@ var displayMediaOptions = {
             //for(e in supportedConstraints)
                // console.log(e)
 
-            //dumpOptionsInfo() 
+            dumpOptionsInfo() 
            
 
         } catch(err) { 
