@@ -122,7 +122,7 @@ var displayMediaOptions = {
                 height:  720
             }
             //videoElem.srcObject.getVideoTracks()[0].applyConstraints(video_constraints)
-
+            console.log('speriamo : ' + JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().height, null, 2))
             const window_height = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().height, null , 2 ) 
             const window_width = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().width , null , 2 ) 
             console.log(window_height, window_width)
