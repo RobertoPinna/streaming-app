@@ -76,8 +76,8 @@ socket.on('print_ip' , (ip_address) => {
 })
 
 
-canvas.width = 850 
-canvas.height = 600
+canvas.width = 500 
+canvas.height = 870
 context.width = canvas.width 
 context.height = canvas.height
 
@@ -125,8 +125,8 @@ var displayMediaOptions = {
             videoElem.srcObject = videoTry
             
             const video_constraints = {
-                width: 1280 ,
-                height:  720
+                width: 200 ,
+                height:  200
             }
             //videoElem.srcObject.getVideoTracks()[0].applyConstraints(video_constraints)
             
