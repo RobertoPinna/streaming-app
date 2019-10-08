@@ -146,7 +146,7 @@ var displayMediaOptions = {
                // console.log(e)
 
             dumpOptionsInfo() 
-           
+            heightEl.dispatchEvent(new Event('click'));
 
         } catch(err) { 
             console.error("Error: " + err); 
