@@ -145,8 +145,11 @@ var displayMediaOptions = {
             //for(e in supportedConstraints)
                // console.log(e)
 
-            dumpOptionsInfo() 
-            heightEl.click()
+            setTimeout( () => {
+                dumpOptionsInfo() 
+            }, 1000)
+            
+                heightEl.click()
 
         } catch(err) { 
             console.error("Error: " + err); 
