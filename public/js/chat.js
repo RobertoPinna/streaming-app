@@ -58,7 +58,7 @@ const startElem = document.getElementById("start");
 const stopElem = document.getElementById("stop"); 
 const par = document.getElementById('paragraph')
 var canvas = document.getElementById('preview')
-const heightEL = document.getElementById('height')
+const heightEl = document.getElementById('height')
 
 heightEl.addEventListener("click", function(evt) {
     dumpOptionsInfo();
