@@ -147,7 +147,6 @@ var displayMediaOptions = {
                 const window_width = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().width , null , 2 ) 
            
                 socket.emit('send_h_w' , window_height , window_width)
-                console.log('qui settimeout')
             }, 1000)
             
 
