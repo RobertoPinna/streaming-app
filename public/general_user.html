@@ -57,7 +57,7 @@
                 //console.log(window_height + " ; " + window_width)
                 conta++ ; 
                 console.log(conta)
-                socket.emit("send_mouse" , e.screenX + 1490, e.screenY + 676)
+                socket.emit("send_mouse" , e.screenX , e.screenY )
             })
 
             document.getElementById("mouse").addEventListener("click" , (e) => {

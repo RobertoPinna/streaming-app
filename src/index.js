@@ -113,7 +113,8 @@ io.on('connection' , (socket) => { // when someone connect to server
     socket.on('send_mouse' , (x_pos , y_pos) => {
         posx = x_pos
         posy = y_pos
-        console.log(x_pos+' sono qui')
+        console.log(posx+' sono qui')
+        console.log(x_pos)
         socket.broadcast.emit('receive_mouse' , x_pos , y_pos)
         
         
