@@ -7,15 +7,20 @@ const socket = io()
 
 var ip = ''
 
+var conta = 0
 
 socket.on('receive_mouse' , (x_pos , y_pos) => {
     console.log(x_pos + " ;ciao; " + y_pos)
 
     fetch('http://localhost:3001/prova1').then( (response) => {
-            console.log(response)
-            console.log('here')
+            //console.log(response)
+            
+            //console.log('here')
             response.json().then( (data) => {
-                console.log('si')
+                conta++
+                console.log(conta)
+
+                //console.log('si')
             })
             
         }).catch( (error) => {

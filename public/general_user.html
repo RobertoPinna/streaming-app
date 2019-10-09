@@ -37,6 +37,7 @@
             var socket = io()
             var window_height = 0
             var window_width = 0 
+            var conta = 0 
 
             socket.on("stream_server" , function(image){
                 var img = document.getElementById("play")
@@ -54,6 +55,8 @@
             document.getElementById("mouse").addEventListener("mousemove" , (e) => {
                 console.log(e.screenX + ";" + e.screenY)
                 //console.log(window_height + " ; " + window_width)
+                conta++ ; 
+                console.log(conta)
                 socket.emit("send_mouse" , e.screenX + 1490, e.screenY + 676)
             })
 
