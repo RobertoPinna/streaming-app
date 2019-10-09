@@ -111,10 +111,11 @@ io.on('connection' , (socket) => { // when someone connect to server
         
 
     socket.on('send_mouse' , (x_pos , y_pos) => {
-        socket.broadcast.emit('receive_mouse' , x_pos , y_pos)
-        console.log(x_pos+' sono qui')
         posx = x_pos
         posy = y_pos
+        console.log(x_pos+' sono qui')
+        socket.broadcast.emit('receive_mouse' , x_pos , y_pos)
+        
         
         /*fetch('http://localhost:3001/prova1?ip='+x_pos).then( (response) => {
             response.json().then( (data) => {
