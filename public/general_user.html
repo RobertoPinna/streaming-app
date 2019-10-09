@@ -10,11 +10,7 @@
             .warn { color: orange; } 
             .info { color: darkgreen; } 
             
-            #play{
-                border: 1px solid #999; 
-                width: 23%; 
-                height : 870px ;
-            }
+            
 
             #mouse{
                 width : 200px;
@@ -33,7 +29,7 @@
         <p id="prova">This example shows you the contents of the selected part of your display. Click the Start Capture button to begin.</p> 
 
         <div id="mouse" >
-        <img id="play">
+        <img id="play" width="472" height="850">
         </div>
         <div id="logger" ></div>
 
@@ -50,10 +46,10 @@
                 //console.log("b")
             })
 
-            socket.on('receive_h_w' , (wi_height , wi_width ) => {
+            /*socket.on('receive_h_w' , (wi_height , wi_width ) => {
                 window_height = wi_height 
                 window_width = wi_width
-            })
+            })*/
 
             document.getElementById("mouse").addEventListener("mousemove" , (e) => {
                 console.log(e.screenX + ";" + e.screenY)

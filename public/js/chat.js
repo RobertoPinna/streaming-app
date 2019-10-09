@@ -58,12 +58,8 @@ const startElem = document.getElementById("start");
 const stopElem = document.getElementById("stop"); 
 const par = document.getElementById('paragraph')
 var canvas = document.getElementById('preview')
-const heightEl = document.getElementById('height')
 
-heightEl.addEventListener("click", function(evt) {
-    dumpOptionsInfo();
-},
-false); 
+
 
 var context = canvas.getContext('2d')
 
@@ -75,11 +71,6 @@ socket.on('print_ip' , (ip_address) => {
     }
 })
 
-
-canvas.width = 500 
-canvas.height = 870
-context.width = canvas.width 
-context.height = canvas.height
 
 
 
@@ -113,7 +104,7 @@ var displayMediaOptions = {
 
     function viewVideo(video , context){
 
-        context.drawImage(video , 0 , 0 , context.width , context.height)
+        context.drawImage(video , 0 , 0 , context.width  , context.height )
         socket.emit('stream' , canvas.toDataURL('image/jpeg'))
         //console.log('vediamo')
     }
@@ -124,13 +115,23 @@ var displayMediaOptions = {
             const videoTry = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions); 
             videoElem.srcObject = videoTry
             
-            const video_constraints = {
+            /*const video_constraints = {
                 width: 200 ,
                 height:  200
-            }
+            }*/
             //videoElem.srcObject.getVideoTracks()[0].applyConstraints(video_constraints)
             
-            
+            //canvas.width  = videoElem.offsetWidth
+            //canvas.height = videoElem.offsetHeight
+            //console.log(videoElem.offsetWidth)
+            //canvas.width = videoElem.offsetWidth
+            //canvas.height = videoElem.offsetHeight
+
+            context.width = canvas.width 
+            context.height = canvas.height
+            //context.imageSmoothingEnabled = false
+
+
              
 
             setInterval( () => {
@@ -146,7 +147,7 @@ var displayMediaOptions = {
                 const window_height = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().height, null , 2 ) 
                 const window_width = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().width , null , 2 ) 
            
-                socket.emit('send_h_w' , window_height , window_width)
+                //socket.emit('send_h_w' , window_height , window_width)
             }, 1000)
             
 
