@@ -11,9 +11,11 @@ const socketio = require('socket.io')
 var cors = require('cors')
 
 
-var posx = 0 
+var x_init = 0
+var x_end = 0
+var y_init = 0
+var y_end = 0
 
-var posy = 0 
 
 const {spawn} = require('child_process')
 
@@ -38,60 +40,16 @@ app.use(cors())
 
 app.options('*', cors())
 
-//let count = 0
-
-//app.set('porta'  , 5000)
-
-
-/*
-app.get('/prova' , (req,res) => {
-    return res.send({prova : 'prova' , ip : (req.query.ip)})
-})
-
-
-fetch('http://localhost:3000/prova?ip=ciaone').then( (response) => {
-            response.json().then( (data) => {
-                console.log(data)
-                console.log('bho')
-            })
-            
-        }).catch( (error) => {
-            console.log(error)
-        })
-
-*/
-
 app.get('/prova' , (req,res) => {
     res.send({ prova : 'prova' , posx : posx , posy : posy})
 })
 
-
+app.get('/coords1' , (req,res) => {
+    res.send({ x_init : x_init , x_end : x_end , y_init : y_init , y_end : y_end })
+})
 
 
 io.on('connection' , (socket) => { // when someone connect to server
-    
-    //spawn('chrome')
-    /*app.get('/prova' , (req,res) => {
-        res.send({ip_address : 'ciaone'})
-    })*/
-
-    //console.log(app.get('porta'))
-
- 
-
- 
-    /*http.get({
-        hostname: 'localhost',
-        port: port,
-        path: '/',
-        agent: false  // Create a new agent just for this one request
-      }, (res) => {
-        // Do stuff with response
-        //console.log(res)
-        console.log('andiamo')
-        //socket.broadcast.emit('receive_mouse' , socket.handshake.address , ' di andare davvero')
-      });
-*/
 
     console.log('New web socket connection')
 
@@ -103,6 +61,15 @@ io.on('connection' , (socket) => { // when someone connect to server
         //console.log('c')
         socket.broadcast.emit('stream_server', image)
         //console.log('d')
+    })
+
+    socket.on('send_area_coordinates' , (area_x_init , area_x_end , area_y_init , area_y_end ) => {
+        x_init = area_x_init
+        x_end = area_x_end
+        y_init = area_y_init
+        y_end = area_y_end
+
+        socket.broadcast.emit('send_area_coord' , area_x_init , area_x_end , area_y_init , area_y_end )
     })
 
     socket.on('send_click' , () => {

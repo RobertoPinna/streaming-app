@@ -13,14 +13,10 @@ socket.on('receive_mouse' , (x_pos , y_pos) => {
     console.log(x_pos + " ;ciao; " + y_pos)
 
     fetch('http://localhost:3001/prova1').then( (response) => {
-            //console.log(response)
-            
-            //console.log('here')
+
             response.json().then( (data) => {
                 conta++
                 console.log(conta)
-
-                //console.log('si')
             })
             
         }).catch( (error) => {
@@ -28,6 +24,21 @@ socket.on('receive_mouse' , (x_pos , y_pos) => {
         })
 
 
+})
+
+socket.on('send_area_coord' , ( area_x_init , area_x_end , area_y_init , area_y_end ) => {
+    fetch('http://localhost:3001/coords').then( (response) => {
+
+            response.json().then( (data) => {
+                conta++
+                console.log(conta)
+            })
+            
+        }).catch( (error) => {
+            console.log(error)
+        })
+
+    
 })
 
 socket.on('receive_click' , () => {
