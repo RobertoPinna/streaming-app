@@ -1,2 +1,4 @@
 node_modules
 expr.js
+package.json
+package-lock.json
