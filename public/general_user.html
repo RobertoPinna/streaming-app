@@ -24,15 +24,15 @@
 
             .area-block {
                 position: absolute;
-                top:10.1%;
+                top:9.1%;
                 left:2.7%;
-                height:73.7%;
-                width:22.7%;
+                height:75.7%;
+                width:21.7%;
             }
 
             img.immagine{
-                height:94%;
-                width:28%;
+                height:95%;
+                width:27%;
             }
 
 
@@ -43,9 +43,13 @@
 
     <body>
 
-        <div class="container" id="area_mouse">
+        Capture video 
+
+        <p id="prova">This example shows you the contents of the selected part of your display. Click the Start Capture button to begin.</p> 
+
+        <div class="container">
             <img class="immagine" id="play">
-            <div class="area-block" >
+            <div class="area-block" id="area_mouse">
             </div>
         </div>
         <div id="logger" ></div>
@@ -70,11 +74,11 @@
             })*/
 
             document.getElementById("area_mouse").addEventListener("mousemove" , (e) => {
-                console.log(e.screenX + ";" + e.screenY)
+                console.log(e.clientX + ";" + e.clientY)
                 //console.log(window_height + " ; " + window_width)
                 conta++ ; 
                 console.log(conta)
-                socket.emit("send_mouse" , e.screenX , e.screenY )
+                socket.emit("send_mouse" , e.clientX , e.clientY )
             })
 
             document.getElementById("area_mouse").addEventListener("click" , (e) => {
