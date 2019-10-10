@@ -9,16 +9,35 @@
             .error { color: red; } 
             .warn { color: orange; } 
             .info { color: darkgreen; } 
-            
-            
 
-            #mouse{
-                width : 200px;
+            html , body {
+                height : 100%;
             }
-        </style> 
+            
+            div{
+                height : 100%;
+            }
+
+            .container {
+                position: relative;
+            }
+
+            .area-block {
+                position: absolute;
+                top:8.8%;
+                left:2.4%;
+                height:71.3%;
+                width:20.3%;
+            }
+
+            img.immagine{
+                height:90%;
+                width:25%;
+            }
 
 
 
+        </style>
        
     </head>
 
@@ -28,8 +47,10 @@
 
         <p id="prova">This example shows you the contents of the selected part of your display. Click the Start Capture button to begin.</p> 
 
-        <div id="mouse" >
-        <img id="play" width="472" height="850">
+        <div class="container">
+            <img class="immagine" id="play">
+            <div class="area-block" id="area_mouse">
+            </div>
         </div>
         <div id="logger" ></div>
 
@@ -52,7 +73,7 @@
                 window_width = wi_width
             })*/
 
-            document.getElementById("mouse").addEventListener("mousemove" , (e) => {
+            document.getElementById("area_mouse").addEventListener("mousemove" , (e) => {
                 console.log(e.screenX + ";" + e.screenY)
                 //console.log(window_height + " ; " + window_width)
                 conta++ ; 
@@ -60,7 +81,7 @@
                 socket.emit("send_mouse" , e.screenX , e.screenY )
             })
 
-            document.getElementById("mouse").addEventListener("click" , (e) => {
+            document.getElementById("area_mouse").addEventListener("click" , (e) => {
                 socket.emit("send_click")
             })
          
