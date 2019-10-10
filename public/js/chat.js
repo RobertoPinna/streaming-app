@@ -30,8 +30,7 @@ socket.on('send_area_coord' , ( area_x_init , area_x_end , area_y_init , area_y_
     fetch('http://localhost:3001/coords').then( (response) => {
 
             response.json().then( (data) => {
-                conta++
-                console.log(conta)
+                console.log(conta+'andiamo')
             })
             
         }).catch( (error) => {
