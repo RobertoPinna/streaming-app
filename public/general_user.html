@@ -68,8 +68,9 @@
             const area_width = area_mouse.offsetWidth
             const area_height = area_mouse.offsetHeight // 485?
 
-            
-            socket.emit('send_area_coordinates' , area_x , area_width  + area_x , area_y , area_height + area_y )
+            socket.on('u_can_send_area_size' , ( ) =>{
+                socket.emit('send_area_coordinates' , area_x , area_width  + area_x , area_y , area_height + area_y )
+            })
 
             socket.on("stream_server" , function(image){
                 var img = document.getElementById("play")

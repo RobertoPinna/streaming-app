@@ -153,17 +153,21 @@ var displayMediaOptions = {
                     viewVideo(videoElem , context )
             } , 75 )
 
+            setTimeout ( () => {
+                socket.emit('allow_send_area_size')
+            } , 1000)
+
             //let supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
             //for(e in supportedConstraints)
                // console.log(e)
-
+            /*
             setTimeout( () => {
                 const window_height = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().height, null , 2 ) 
                 const window_width = JSON.stringify(videoElem.srcObject.getVideoTracks()[0].getSettings().width , null , 2 ) 
            
                 //socket.emit('send_h_w' , window_height , window_width)
             }, 1000)
-            
+            */
 
         } catch(err) { 
             console.error("Error: " + err); 

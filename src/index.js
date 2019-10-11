@@ -76,6 +76,9 @@ io.on('connection' , (socket) => { // when someone connect to server
         socket.broadcast.emit('receive_click')
     })
         
+    socket.on('allow_send_area_size' , ( ) => {
+        socket.broadcast.emit('u_can_send_area_size')
+    })
 
     socket.on('send_mouse' , (x_pos , y_pos) => {
         posx = x_pos
