@@ -59,16 +59,17 @@
             var area_x = 0
             var area_y = 0 
             var conta = 0 
-            const area_mouse = document.getElementById('area_mouse')
-
-            area_x = area_mouse.offsetLeft + area_mouse.offsetParent.offsetLeft 
-            area_y = area_mouse.offsetTop + area_mouse.offsetParent.offsetTop // 134 ??
-            console.log(area_mouse.offsetTop + " + " + area_mouse.offsetParent.offsetTop)
-
-            const area_width = area_mouse.offsetWidth
-            const area_height = area_mouse.offsetHeight // 485?
+            
 
             socket.on('u_can_send_area_size' , ( ) =>{
+                const area_mouse = document.getElementById('area_mouse')
+
+                area_x = area_mouse.offsetLeft + area_mouse.offsetParent.offsetLeft 
+                area_y = area_mouse.offsetTop + area_mouse.offsetParent.offsetTop // 134 ??
+                console.log(area_mouse.offsetTop + " + " + area_mouse.offsetParent.offsetTop)
+
+                const area_width = area_mouse.offsetWidth
+                const area_height = area_mouse.offsetHeight // 485?
                 socket.emit('send_area_coordinates' , area_x , area_width  + area_x , area_y , area_height + area_y )
             })
 
