@@ -36,7 +36,6 @@ socket.on('send_area_coord' , ( area_x_init , area_x_end , area_y_init , area_y_
         }).catch( (error) => {
             console.log(error)
         })
-
     
 })
 

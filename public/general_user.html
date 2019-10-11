@@ -61,14 +61,15 @@
             var conta = 0 
             const area_mouse = document.getElementById('area_mouse')
 
-            area_x = area_mouse.offsetLeft + area_mouse.offsetParent.offsetLeft
-            area_y = area_mouse.offsetTop + area_mouse.offsetParent.offsetTop
+            area_x = area_mouse.offsetLeft + area_mouse.offsetParent.offsetLeft 
+            area_y = area_mouse.offsetTop + area_mouse.offsetParent.offsetTop // 136 ??
+        
 
             const area_width = area_mouse.offsetWidth
-            const area_height = area_mouse.offsetHeight
+            const area_height = area_mouse.offsetHeight // 485?
 
             
-            socket.emit('send_area_coordinates' , area_x , area_width  + area_x , area_y , area_height + area_y  )
+            socket.emit('send_area_coordinates' , area_x , area_width  + area_x , area_y , area_height + area_y )
 
             socket.on("stream_server" , function(image){
                 var img = document.getElementById("play")
@@ -77,11 +78,6 @@
                 //console.log("a")
                 //console.log("b")
             })
-
-            /*socket.on('receive_h_w' , (wi_height , wi_width ) => {
-                window_height = wi_height 
-                window_width = wi_width
-            })*/
 
             document.getElementById("area_mouse").addEventListener("mousemove" , (e) => {
                 console.log(e.clientX + ";" + e.clientY)
