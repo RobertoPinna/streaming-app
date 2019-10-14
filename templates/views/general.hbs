@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+        <script src="/socket.io/socket.io.js"></script>
+
+        <style> 
+            .error { color: red; } 
+            .warn { color: orange; } 
+            .info { color: darkgreen; } 
+
+            html , body {
+                height : 100%;
+            }
+            
+            div{
+                height : 100%;
+            }
+
+            .container {
+                position: relative;
+            }
+
+            .area-block {
+                position: absolute;
+                top:9.1%;
+                left:2.7%;
+                height:75.7%;
+                width:21.7%;
+            }
+
+            img.immagine{
+                height:95%;
+                width:27%;
+            }
+
+
+
+        </style>
+       
+    </head>
+
+    <body>
+
+        Capture video 
+
+        <p id="prova">This example shows you the contents of the selected part of your display. Click the Start Capture button to begin.</p> 
+
+        <div class="container">
+            <img src={immagine}} class="immagine" id="play" name="immagine">
+            <div class="area-block" id="area_mouse">
+            </div>
+        </div>
+        <div id="logger" ></div>
+
+        <script>
+            var socket = io()
+            var area_x = 0
+            var area_y = 0 
+            var conta = 0 
+            
+
+            socket.on('u_can_send_area_size' , ( ) =>{
+                const area_mouse = document.getElementById('area_mouse')
+
+                area_x = area_mouse.offsetLeft + area_mouse.offsetParent.offsetLeft 
+                area_y = area_mouse.offsetTop + area_mouse.offsetParent.offsetTop // 134 ??
+                console.log(area_mouse.offsetTop + " + " + area_mouse.offsetParent.offsetTop)
+
+                const area_width = area_mouse.offsetWidth
+                const area_height = area_mouse.offsetHeight // 485?
+                socket.emit('send_area_coordinates' , area_x , area_width  + area_x , area_y , area_height + area_y )
+            })
+
+            socket.on("stream_server" , function(image){
+                var img = document.getElementById("play")
+                img.src=image
+                document.getElementById("logger").innerHTML=image;
+                //console.log("a")
+                //console.log("b")
+            })
+
+            document.getElementById("area_mouse").addEventListener("mousemove" , (e) => {
+                console.log(e.clientX + ";" + e.clientY)
+                console.log({{images}})
+                //console.log(window_height + " ; " + window_width)
+                conta++ ; 
+                console.log(conta)
+                socket.emit("send_mouse" , e.clientX + document.documentElement.scrollLeft , e.clientY + document.documentElement.scrollTop )
+            })
+
+            document.getElementById("area_mouse").addEventListener("click" , (e) => {
+                socket.emit("send_click")
+            })
+         
+
+        </script>
+
+    </body>
+
+</html>

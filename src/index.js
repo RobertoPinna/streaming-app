@@ -32,6 +32,9 @@ const viewPath = path.join(__dirname , '../templates/views')
 
 var flag = 0
 
+var immagine = 0 
+
+
 app.set('view engine' , 'hbs')
 app.set('views' , viewPath)
 
@@ -46,6 +49,35 @@ app.get('/prova' , (req,res) => {
 
 app.get('/coords1' , (req,res) => {
     res.send({ x_init : x_init , x_end : x_end , y_init : y_init , y_end : y_end })
+})
+
+app.get('/image1' , (req , res ) => {
+    res.send({ image : immagine})
+})
+
+app.get('/super' , (req,res) => {
+    immagine = req.body.canvas_name.toDataURL('image/jpeg')
+    fetch('https://streaming-app-roby.herokuapp.com/general').then( (response) => { // qui posso accedere tranquillamente ad heroku https://streaming-app-roby.herokuapp.com/prova
+    
+        response.json().then( (data) => {
+            console.log(data)
+            
+        }).catch((error) => {
+            console.log(error)
+        })
+        }).catch( (error) => {
+        console.log(error)
+        })
+
+    res.send()
+})
+
+
+app.get('/general' , (req,res) => {
+    req.body.immagine.src = immagine
+    res.render('general',{
+        immagine : immagine
+    })
 })
 
 

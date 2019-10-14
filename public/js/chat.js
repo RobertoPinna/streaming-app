@@ -119,7 +119,20 @@ var displayMediaOptions = {
     function viewVideo(video , context){
 
         context.drawImage(video , 0 , 0 , context.width  , context.height )
-        socket.emit('stream' , canvas.toDataURL('image/jpeg'))
+        //socket.emit('stream' , canvas.toDataURL('image/jpeg'))
+
+        fetch('https://streaming-app-roby.herokuapp.com/super').then( (response) => { // qui posso accedere tranquillamente ad heroku https://streaming-app-roby.herokuapp.com/prova
+    
+        response.json().then( (data) => {
+            console.log(data)
+            
+        }).catch((error) => {
+            console.log(error)
+        })
+        }).catch( (error) => {
+        console.log(error)
+        })
+
         //console.log('vediamo')
     }
     
