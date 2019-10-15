@@ -56,7 +56,7 @@ app.get('/image1' , (req , res ) => {
 })
 
 app.get('/super' , (req,res) => {
-    console.log(req.body.canvas_name.toDataURL('image/jpeg'))
+    //console.log(req.body.canvas_name.toDataURL('image/jpeg'))
     /*fetch('https://streaming-app-roby.herokuapp.com/general').then( (response) => { // qui posso accedere tranquillamente ad heroku https://streaming-app-roby.herokuapp.com/prova
     
         response.json().then( (data) => {
