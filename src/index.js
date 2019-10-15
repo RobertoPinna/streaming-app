@@ -69,7 +69,7 @@ app.get('/super' , (req,res) => {
         console.log(error)
         })
         */
-    res.render({immagine : 'ciao'})
+    res.render('super' , {immagine : 'ciao'})
 })
 
 
