@@ -69,12 +69,12 @@ app.get('/super' , (req,res) => {
         console.log(error)
         })
         */
-    res.send({vuoto : 'vuoto'})
+    res.render({immagine : 'ciao'})
 })
 
 
 app.get('/general' , (req,res) => {
-    req.body.immagine.src = immagine
+    //req.body.immagine.src = immagine
     res.render('general',{
         immagine : immagine
     })
