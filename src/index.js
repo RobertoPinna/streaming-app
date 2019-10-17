@@ -138,7 +138,7 @@ io.on('connection' , (socket) => { // when someone connect to server
         console.log('questo?')
         immagine = req.body.immagine
         socket.broadcast.emit('stream_server', req.body.immagine)
-        next()
+        res.send({})
     })
     app.get('/image1' , (req,res, next) => {
 
