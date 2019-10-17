@@ -123,12 +123,6 @@ app.get('/image1' , (req,res, next) => {
 
 var sock = 0
 
-app.get('/image1' , (req,res, next) => {
-
-    console.log('codesto?')
-    sock.broadcast.emit('stream_server', immagine)
-    res.send({})
-})
 
 io.on('connection' , (socket) => { // when someone connect to server
 
@@ -150,7 +144,7 @@ io.on('connection' , (socket) => { // when someone connect to server
 
         console.log('codesto?')
         socket.broadcast.emit('stream_server', immagine)
-        next()
+        res.send({})
     })
     /*
     socket.on('stream' , (image) => {
