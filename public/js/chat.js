@@ -18,30 +18,13 @@ socket.on('receive_mouse' , (x_pos , y_pos) => {
 })
 
 socket.on('send_area_coord' , ( area_x_init , area_x_end , area_y_init , area_y_end ) => {
-    fetch('http://localhost:3001/coords').then( (response) => {
-
-            response.json().then( (data) => {
-                console.log(conta+'andiamo')
-            })
-            
-        }).catch( (error) => {
-            console.log(error)
-        })
+    fetch('http://localhost:3001/coords')
     
 })
 
 socket.on('receive_click' , () => {
     console.log('click')
-    fetch('http://localhost:3001/click').then( (response) => {
-            console.log(response)
-            console.log('here')
-            response.json().then( (data) => {
-                console.log('si')
-            })
-            
-        }).catch( (error) => {
-            console.log(error)
-        })
+    fetch('http://localhost:3001/click')
 
 })
 /*

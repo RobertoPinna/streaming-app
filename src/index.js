@@ -73,48 +73,6 @@ app.get('/super' , (req,res) => {
 })
 
 
-app.post('/image' , (req,res, next) => {
-    //console.log(req.body.canvas_name.toDataURL('image/jpeg'))
-    console.log('qui')
-    //console.log(req.query.posx)
-    //console.log(req.query.posy)
-    console.log(req.body.immagine)
-    console.log('qua')
-    immagine = req.body.immagine
-    console.log(immagine === req.body.immagine)
-    /*
-    res.writeHead(200, {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-    });
-    */
-   //fetch('http://localhost:3000/image1')
-   var data = immagine.replace(/^data:image\/\w+;base64,/, '')
-    require("fs").writeFile(pathImage + '/image_try.png', data, {encoding: 'base64'}, function(err) {
-        console.log(err);
-    });
-    res.send( {image : req.body.immagine})
-})
-
-
-/*
-app.get('/image1' , (req,res, next) => {
-    console.log('questo?')
-    //req.body.immagine.src = immagine
-    res.writeHead(200, {
-    //res.status(200).set({
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-    });
-    res.write(`data : ${immagine}`)
-    res.end()
-})*/
-
-var sock = 0
-
-
 io.on('connection' , (socket) => { // when someone connect to server
 
     sock = socket
