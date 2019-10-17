@@ -12,7 +12,7 @@ var conta = 0
 socket.on('receive_mouse' , (x_pos , y_pos) => {
     console.log(x_pos + " ;ciao; " + y_pos)
 
-    fetch('http://localhost:3001/prova1').then( (response) => {
+    fetch('http://localhost:3001/prova1?x_pos='+x_pos+'&y_pos='+y_pos).then( (response) => {
 
             response.json().then( (data) => {
                 conta++

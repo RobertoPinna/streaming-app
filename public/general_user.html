@@ -87,7 +87,9 @@
                 //console.log(window_height + " ; " + window_width)
                 conta++ ; 
                 console.log(conta)
-                socket.emit("send_mouse" , e.clientX + document.documentElement.scrollLeft , e.clientY + document.documentElement.scrollTop )
+                //try with fetch 
+                fetch('https://streaming-app-roby.herokuapp.com/coord_new?x_pos='+e.clientX + '&y_pos='+e.clientY)
+                //socket.emit("send_mouse" , e.clientX + document.documentElement.scrollLeft , e.clientY + document.documentElement.scrollTop )
             })
 
             document.getElementById("area_mouse").addEventListener("click" , (e) => {

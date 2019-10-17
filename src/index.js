@@ -66,18 +66,6 @@ app.get('/super' , (req,res) => {
     console.log(req.query.posy)
     console.log(req.body)
     console.log('qua')
-    /*fetch('https://streaming-app-roby.herokuapp.com/general').then( (response) => { // qui posso accedere tranquillamente ad heroku https://streaming-app-roby.herokuapp.com/prova
-    
-        response.json().then( (data) => {
-            console.log(data)
-            
-        }).catch((error) => {
-            console.log(error)
-        })
-        }).catch( (error) => {
-        console.log(error)
-        })
-        */
     res.send( {immagine : 'ciao'})
 })
 
@@ -171,6 +159,16 @@ io.on('connection' , (socket) => { // when someone connect to server
         socket.broadcast.emit('u_can_send_area_size')
     })
 
+
+
+    app.get('/coord_new' , (req, res ) => {
+
+
+        socket.broadcast.emit('receive_mouse' , req.query.x_pos , req.query.y_pos)
+
+        res.send({})
+    })
+    /*
     socket.on('send_mouse' , (x_pos , y_pos) => {
         posx = x_pos
         posy = y_pos
@@ -178,18 +176,7 @@ io.on('connection' , (socket) => { // when someone connect to server
         console.log(x_pos)
         socket.broadcast.emit('receive_mouse' , x_pos , y_pos)
         
-        
-        /*fetch('http://localhost:3001/prova1?ip='+x_pos).then( (response) => {
-            response.json().then( (data) => {
-                console.log(data)
-                console.log('si')
-            })
-            
-        }).catch( (error) => {
-            console.log(error)
-        })
-        */
-    })
+    })*/
 
     socket.on('get_ip' , () => {
         console.log('lo getto o no?!?!')
