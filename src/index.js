@@ -121,8 +121,11 @@ app.get('/image1' , (req,res, next) => {
     res.end()
 })*/
 
+var sock = 0
 
 io.on('connection' , (socket) => { // when someone connect to server
+
+    sock = socket
 
     console.log('New web socket connection')
 
@@ -132,7 +135,14 @@ io.on('connection' , (socket) => { // when someone connect to server
     app.post('/image1' , (req,res, next) => {
 
         console.log('questo?')
+        immagine = req.body.immagine
         socket.broadcast.emit('stream_server', req.body.immagine)
+        next()
+    })
+    app.get('/image1' , (req,res, next) => {
+
+        console.log('codesto?')
+        socket.broadcast.emit('stream_server', immagine)
         next()
     })
     /*
@@ -141,6 +151,7 @@ io.on('connection' , (socket) => { // when someone connect to server
         socket.broadcast.emit('stream_server', image)
         //console.log('d')
     })
+
     */
     socket.on('send_area_coordinates' , (area_x_init , area_x_end , area_y_init , area_y_end ) => {
         x_init = area_x_init
