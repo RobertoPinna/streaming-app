@@ -12,16 +12,7 @@ var conta = 0
 socket.on('receive_mouse' , (x_pos , y_pos) => {
     console.log(x_pos + " ;ciao; " + y_pos)
 
-    fetch('http://localhost:3001/prova1?x_pos='+x_pos+'&y_pos='+y_pos).then( (response) => {
-
-            response.json().then( (data) => {
-                conta++
-                console.log(conta)
-            })
-            
-        }).catch( (error) => {
-            console.log(error)
-        })
+    fetch('http://localhost:3001/prova1?x_pos='+x_pos+'&y_pos='+y_pos)
 
 
 })
@@ -53,7 +44,7 @@ socket.on('receive_click' , () => {
         })
 
 })
-
+/*
 var flag = 0 
 
 if ( flag == 0 ){
@@ -62,7 +53,7 @@ if ( flag == 0 ){
 
 socket.on('check_ip' , () => {
      socket.emit('get_ip')
-})
+})*/
 
 
 //make a function here and make another function in another file, pass the image between the two
