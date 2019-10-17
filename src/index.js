@@ -42,9 +42,12 @@ app.set('view engine' , 'hbs')
 app.set('views' , viewPath)
 //hbs.registerPartials(partialsPath)
 
-app.use(bodyParser.urlencoded({ extended: true }))
+
+
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
+
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(express.static(publicDirectoryPath))
 app.use(cors())
 
@@ -130,7 +133,6 @@ io.on('connection' , (socket) => { // when someone connect to server
     })
     app.get('/image1' , (req,res, next) => {
 
-        console.log('codesto?')
         socket.broadcast.emit('stream_server', immagine)
         res.send({})
     })
