@@ -19,8 +19,8 @@
     "express": "^4.17.1",
     "hbs": "^4.0.5",
     "node-fetch": "^2.6.0",
-    "robotjs": "^0.5.1",
     "socket.io": "^2.2.0"
+    
   },
   "devDependencies": {
     "nodemon": "^1.19.2"
