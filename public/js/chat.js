@@ -120,20 +120,23 @@ var displayMediaOptions = {
 
         context.drawImage(video , 0 , 0 , context.width  , context.height )
         //socket.emit('stream' , canvas.toDataURL('image/jpeg'))
-
-        fetch('https://streaming-app-roby.herokuapp.com/super').then( (response) => { // qui posso accedere tranquillamente ad heroku https://streaming-app-roby.herokuapp.com/prova
-    
-        response.json().then( (data) => {
-            console.log(data)
-            
-        }).catch((error) => {
-            console.log(error)
-        })
-        }).catch( (error) => {
-        console.log(error)
-        })
+        
+        const options = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify( { immagine : canvas.toDataURL('image/jpeg') } )
+          }
+      
+          fetch('http://localhost:3000/image1', options)
+          //fetch('http://localhost:3000/general')
 
         //console.log('vediamo')
+
+        //fetch('http://localhost:3000/?image='+ canvas.toDataURL('image/jpeg') )
+
+
     }
     
     async function startCapture() { 

@@ -55,11 +55,12 @@
         <div id="logger" ></div>
 
         <script>
+            
             var socket = io()
             var area_x = 0
             var area_y = 0 
             var conta = 0 
-            
+            var flag = 0
 
             socket.on('u_can_send_area_size' , ( ) =>{
                 const area_mouse = document.getElementById('area_mouse')
@@ -93,6 +94,12 @@
                 socket.emit("send_click")
             })
          
+            /*var source = new EventSource("http://localhost:3000/image1")
+            source.addEventListener('message', (event) => {
+                console.log(event)
+                console.log('non ci credo')
+                //document.getElementById("play").src = event.data 
+            })*/
 
         </script>
 

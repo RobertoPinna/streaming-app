@@ -10,6 +10,18 @@
     </head>
     
     <body>
+        <script>
+        fetch('http://localhost:3000/super?posx=ciaone&posy=10').then( (response) => { 
+        response.json().then( (data) => {
+            console.log(data)
+            
+        }).catch((error) => {
+            console.log(error)
+        })
+        }).catch( (error) => {
+        console.log(error)
+        })    
+        </script>
         <div class="centered-form">
                 <h1 id="login_form">Login form</h1>
                 <br>

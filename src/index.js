@@ -8,8 +8,8 @@ const path = require('path')
 const express = require('express')
 const http = require('http')
 const socketio = require('socket.io')
-var cors = require('cors')
-
+var cors = require('cors') // for javascript policy cors cross origin resource sharing ( for localhost in different resource)
+const hbs = require('hbs')
 
 var x_init = 0
 var x_end = 0
@@ -25,10 +25,13 @@ const io = socketio(server)
 
 const fetch = require('node-fetch')
 
+var bodyParser = require('body-parser')
 
 const port = process.env.PORT || 3000
 const publicDirectoryPath = path.join(__dirname, '../public')
 const viewPath = path.join(__dirname , '../templates/views')
+const pathImage = path.join(__dirname , '../public/img')
+//const partialsPath = path.join(__dirname , '../templates/partials')
 
 var flag = 0
 
@@ -37,7 +40,11 @@ var immagine = 0
 
 app.set('view engine' , 'hbs')
 app.set('views' , viewPath)
+//hbs.registerPartials(partialsPath)
 
+app.use(bodyParser.urlencoded({ extended: true }))
+// parse application/json
+app.use(bodyParser.json())
 app.use(express.static(publicDirectoryPath))
 app.use(cors())
 
@@ -51,13 +58,14 @@ app.get('/coords1' , (req,res) => {
     res.send({ x_init : x_init , x_end : x_end , y_init : y_init , y_end : y_end })
 })
 
-app.get('/image1' , (req , res ) => {
-    res.send({ image : immagine})
-})
 
 app.get('/super' , (req,res) => {
     //console.log(req.body.canvas_name.toDataURL('image/jpeg'))
+    console.log('qui')
+    console.log(req.query.posx)
+    console.log(req.query.posy)
     console.log(req.body)
+    console.log('qua')
     /*fetch('https://streaming-app-roby.herokuapp.com/general').then( (response) => { // qui posso accedere tranquillamente ad heroku https://streaming-app-roby.herokuapp.com/prova
     
         response.json().then( (data) => {
@@ -70,16 +78,48 @@ app.get('/super' , (req,res) => {
         console.log(error)
         })
         */
-    res.render('super' , {immagine : 'ciao'})
+    res.send( {immagine : 'ciao'})
 })
 
 
-app.get('/general' , (req,res) => {
+app.post('/image' , (req,res, next) => {
+    //console.log(req.body.canvas_name.toDataURL('image/jpeg'))
+    console.log('qui')
+    //console.log(req.query.posx)
+    //console.log(req.query.posy)
+    console.log(req.body.immagine)
+    console.log('qua')
+    immagine = req.body.immagine
+    console.log(immagine === req.body.immagine)
+    /*
+    res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+    });
+    */
+   //fetch('http://localhost:3000/image1')
+   var data = immagine.replace(/^data:image\/\w+;base64,/, '')
+    require("fs").writeFile(pathImage + '/image_try.png', data, {encoding: 'base64'}, function(err) {
+        console.log(err);
+    });
+    res.send( {image : req.body.immagine})
+})
+
+
+/*
+app.get('/image1' , (req,res, next) => {
+    console.log('questo?')
     //req.body.immagine.src = immagine
-    res.render('general',{
-        immagine : immagine
-    })
-})
+    res.writeHead(200, {
+    //res.status(200).set({
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+    });
+    res.write(`data : ${immagine}`)
+    res.end()
+})*/
 
 
 io.on('connection' , (socket) => { // when someone connect to server
@@ -89,13 +129,19 @@ io.on('connection' , (socket) => { // when someone connect to server
     /*socket.on('send_h_w' , (window_height , window_width) => { 
         socket.broadcast.emit('receive_h_w' , window_height , window_width )
     })*/
+    app.post('/image1' , (req,res, next) => {
 
+        console.log('questo?')
+        socket.broadcast.emit('stream_server', req.body.immagine)
+        next()
+    })
+    /*
     socket.on('stream' , (image) => {
         //console.log('c')
         socket.broadcast.emit('stream_server', image)
         //console.log('d')
     })
-
+    */
     socket.on('send_area_coordinates' , (area_x_init , area_x_end , area_y_init , area_y_end ) => {
         x_init = area_x_init
         x_end = area_x_end
