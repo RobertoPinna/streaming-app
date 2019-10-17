@@ -127,7 +127,7 @@ app.get('/image1' , (req,res, next) => {
 
     console.log('codesto?')
     sock.broadcast.emit('stream_server', immagine)
-    next()
+    res.send({})
 })
 
 io.on('connection' , (socket) => { // when someone connect to server
