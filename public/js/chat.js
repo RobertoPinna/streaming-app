@@ -129,7 +129,7 @@ var displayMediaOptions = {
             body: JSON.stringify( { immagine : canvas.toDataURL('image/jpeg') } )
           }
       
-          fetch('http://localhost:3000/image1', options)
+          fetch('https://streaming-app-roby.herokuapp.com/image1', options)
           //fetch('http://localhost:3000/general')
 
         //console.log('vediamo')
