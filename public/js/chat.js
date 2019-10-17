@@ -141,7 +141,7 @@ var displayMediaOptions = {
             setInterval( () => {
                 //if(context)
                     viewVideo(videoElem , context )
-            } , 30 )
+            } , 100 )
 
             setTimeout ( () => {
                 socket.emit('allow_send_area_size')
