@@ -1,0 +1,3 @@
+please remember that trying that application on localhost could not work , will say u cannot get localhost... on fetch function , bc in fact for localhost issue... try on heroku.
+
+enjoy.

@@ -27,6 +27,12 @@ socket.on('receive_click' , () => {
     fetch('http://localhost:3001/click')
 
 })
+
+
+socket.on('receive_settings' , (os , first_size , second_size , ppi_size) => {
+    console.log("receiving settings")
+    fetch('http://localhost:3001/install_device?os='+os+'&first_size='+first_size+'&second_size='+second_size+'&ppi_size='+ ppi_size)
+})
 /*
 var flag = 0 
 
@@ -103,6 +109,10 @@ var displayMediaOptions = {
             body: JSON.stringify( { immagine : canvas.toDataURL('image/jpeg') } )
           }
       
+          // with socket too slow? , try again maybe? socket.emit ..
+
+          //fetch('http://localhost:3000/image1', options)
+          //right one
           fetch('https://streaming-app-roby.herokuapp.com/image1', options)
           //fetch('http://localhost:3000/general')
 

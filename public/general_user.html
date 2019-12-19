@@ -43,9 +43,9 @@
 
     <body>
 
-        Capture video 
+        Displaying video 
 
-        <p id="prova">This example shows you the contents of the selected part of your display. Click the Start Capture button to begin.</p> 
+        <p id="prova">Loading your device.. please wait just a bit.</p> 
 
         <div class="container">
             <img class="immagine" id="play">
@@ -88,7 +88,9 @@
                 conta++ ; 
                 console.log(conta)
                 //try with fetch 
-                fetch('https://streaming-app-roby.herokuapp.com/coord_new?x_pos='+e.clientX + '&y_pos='+e.clientY)
+                fetch('http://localhost:3000/coord_new?x_pos='+e.clientX + '&y_pos='+e.clientY)
+                //right one
+                //fetch('https://streaming-app-roby.herokuapp.com/coord_new?x_pos='+e.clientX + '&y_pos='+e.clientY)
                 //socket.emit("send_mouse" , e.clientX + document.documentElement.scrollLeft , e.clientY + document.documentElement.scrollTop )
             })
 

@@ -31,9 +31,6 @@ const port = process.env.PORT || 3000
 const publicDirectoryPath = path.join(__dirname, '../public')
 const viewPath = path.join(__dirname , '../templates/views')
 const pathImage = path.join(__dirname , '../public/img')
-//const partialsPath = path.join(__dirname , '../templates/partials')
-
-var flag = 0
 
 var immagine = 0 
 
@@ -62,16 +59,6 @@ app.get('/coords1' , (req,res) => {
 })
 
 
-app.get('/super' , (req,res) => {
-    //console.log(req.body.canvas_name.toDataURL('image/jpeg'))
-    console.log('qui')
-    console.log(req.query.posx)
-    console.log(req.query.posy)
-    console.log(req.body)
-    console.log('qua')
-    res.send( {immagine : 'ciao'})
-})
-
 
 io.on('connection' , (socket) => { // when someone connect to server
 
@@ -86,14 +73,19 @@ io.on('connection' , (socket) => { // when someone connect to server
 
         console.log('questo?')
         immagine = req.body.immagine
+        //here socket for sure, with fetch don't know how to listen the event and how to pass image
         socket.broadcast.emit('stream_server', req.body.immagine)
         res.send({})
     })
+
+    //****************** */ try with receiving socket event instead on page, receive socket event and send socket
+
     app.get('/image1' , (req,res, next) => {
 
         socket.broadcast.emit('stream_server', immagine)
         res.send({})
     })
+
     /*
     socket.on('stream' , (image) => {
         //console.log('c')
@@ -101,7 +93,9 @@ io.on('connection' , (socket) => { // when someone connect to server
         //console.log('d')
     })
 
+
     */
+
     socket.on('send_area_coordinates' , (area_x_init , area_x_end , area_y_init , area_y_end ) => {
         x_init = area_x_init
         x_end = area_x_end
@@ -123,7 +117,6 @@ io.on('connection' , (socket) => { // when someone connect to server
 
     app.get('/coord_new' , (req, res ) => {
 
-
         socket.broadcast.emit('receive_mouse' , req.query.x_pos , req.query.y_pos)
 
         res.send({})
@@ -137,6 +130,13 @@ io.on('connection' , (socket) => { // when someone connect to server
         socket.broadcast.emit('receive_mouse' , x_pos , y_pos)
         
     })*/
+
+    //here with socket
+
+    socket.on("sending_settings" , (os , first_size , second_size , ppi_size) => {
+        socket.broadcast.emit("receive_settings" , os , first_size , second_size , ppi_size )
+        console.log( os , first_size,second_size,ppi_size , 'ciao')
+    })
 
     socket.on('get_ip' , () => {
         console.log('lo getto o no?!?!')

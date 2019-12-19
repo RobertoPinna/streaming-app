@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+      <script src="/socket.io/socket.io.js"></script>
+
+    </head>
+
+    <body>
+      <br>
+      Here you can choose the device config :  
+      <br><br><br><br>
+      Choose the OS version available : <br><br>
+
+      <form id="settings" action="/general_user.html">
+        <select id="OS">
+          <option value="5.0" name ="os">5.0 (Lollipop)</option>
+          <option value="5.1" name ="os">5.1 (Lollipop)</option>
+          <option value="6.0" name ="os">6.0 (Marshmallow)</option>
+          <option value="7.0" name ="os">7.0 (Nougat)</option>
+          <option value="7.1" name ="os">7.1 (Nougat)</option>
+          <option value="8.0" name ="os">8.0 (Oreo)</option>
+          <option value="9.0" name ="os">9.0 (Pie)</option>
+          <option value="10.0" name ="os">10.0 (Q)</option>
+        </select>
+
+      <br><br>
+  
+      <br>
+      
+      Ppi (dpi) : <br><br>
+
+        <select id="ppi_resolution">
+          <option value="0" name="ppi">120 </option>
+          <option value="1" name="ppi">160 </option>
+          <option value="2" name="ppi">213 TVDPI </option>
+          <option value="3" name="ppi">240 HDPI </option>
+          <option value="4" name="ppi">260 </option>
+          <option value="5" name="ppi">280 </option>
+          <option value="6" name="ppi">300 </option>
+          <option value="7" name="ppi">320 XHDPI </option>
+          <option value="8" name="ppi">340 </option>
+          <option value="9" name="ppi">360 </option>
+          <option value="10" name="ppi">400 </option>
+          <option value="11" name="ppi">420 </option>
+          <option value="12" name="ppi">480 XXHDPI </option>
+          <option value="13" name="ppi">560 </option>
+          <option value="14" name="ppi">640 XXXHDPI </option>
+        </select>
+
+        <br><br>
+
+        Size : <br>
+        <input type="number" id="first_size">
+        &nbsp&nbsp x  &nbsp&nbsp
+        <input type="number" id="second_size">
+
+        <br><br>
+
+
+        <script>
+          function send(){
+
+
+            var os = document.getElementById("OS")
+            
+            var os_version = os.options[os.selectedIndex].value 
+
+            console.log("os version : " + os_version)
+
+            var size = document.getElementById("ppi_resolution");
+            var size_value = size.options[size.selectedIndex].text;  
+            console.log(size_value + " this value ")
+
+            var first_size = document.getElementById("first_size").value
+
+            var second_size = document.getElementById("second_size").value
+
+            console.log(first_size + " primo ; " + second_size + "second :")
+
+            var socket = io()
+
+            socket.emit('sending_settings' , os_version ,  first_size , second_size ,  size_value )
+          }
+
+        </script>
+
+        <input type="submit" value="Submit" onclick="send()"></button> 
+
+      
+        </form>
+
+      </form>
+
+    </body>
+
+</html>
