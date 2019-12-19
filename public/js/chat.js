@@ -154,7 +154,9 @@ var displayMediaOptions = {
             } , 100 )
 
             setTimeout ( () => {
+                console.log('pd')
                 socket.emit('allow_send_area_size')
+                
             } , 1000)
 
             //let supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
