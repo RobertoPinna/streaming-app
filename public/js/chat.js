@@ -154,7 +154,7 @@ var displayMediaOptions = {
             } , 100 )
 
             setTimeout ( () => {
-                console.log('pd')
+                console.log('pa')
                 socket.emit('allow_send_area_size')
                 
             } , 1000)
