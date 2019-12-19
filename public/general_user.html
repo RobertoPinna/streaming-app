@@ -88,9 +88,9 @@
                 conta++ ; 
                 console.log(conta)
                 //try with fetch 
-                fetch('http://localhost:3000/coord_new?x_pos='+e.clientX + '&y_pos='+e.clientY)
+                //fetch('http://localhost:3000/coord_new?x_pos='+e.clientX + '&y_pos='+e.clientY)
                 //right one
-                //fetch('https://streaming-app-roby.herokuapp.com/coord_new?x_pos='+e.clientX + '&y_pos='+e.clientY)
+                fetch('https://streaming-app-roby.herokuapp.com/coord_new?x_pos='+e.clientX + '&y_pos='+e.clientY)
                 //socket.emit("send_mouse" , e.clientX + document.documentElement.scrollLeft , e.clientY + document.documentElement.scrollTop )
             })
 
