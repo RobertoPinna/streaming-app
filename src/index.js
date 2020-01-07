@@ -133,9 +133,9 @@ io.on('connection' , (socket) => { // when someone connect to server
 
     //here with socket
 
-    socket.on("sending_settings" , (os , first_size , second_size , ppi_size) => {
-        socket.broadcast.emit("receive_settings" , os , first_size , second_size , ppi_size )
-        console.log( os , first_size,second_size,ppi_size , 'ciao')
+    socket.on("sending_settings" , (os , browser , browser_version , first_size , second_size , ppi_size) => {
+        socket.broadcast.emit("receive_settings" , os  , browser , browser_version , first_size , second_size , ppi_size )
+        console.log( os , browser , browser_version , first_size,second_size,ppi_size , 'ciao')
     })
 
     socket.on('get_ip' , () => {

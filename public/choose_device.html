@@ -24,9 +24,34 @@
           <option value="10.0" name ="os">10.0 (Q)</option>
         </select>
 
-      <br><br>
-  
-      <br>
+      <br><br><br>
+
+      Choose the browser : &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      Choose the browser version: <br><br>
+      <select id="browser">
+        <option value="Chrome" name ="browser">Chrome</option>
+        <option value="Firefox" name ="brower">Firefox</option>
+        <option value="Edge" name ="browser">Edge</option>
+        <option value="Samsung" name ="browser">Default Samsung</option>
+        <option value="Puffin" name ="browser">Puffin</option>
+        <option value="Opera" name ="browser">Opera</option>
+        <option value="System" name ="browser">System generic brower android</option>
+      </select>      
+
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+      <select id="browser">
+        <option value="1637.13" name ="version">1637.13</option>
+        <option value="1647.13" name ="version">1647.13</option>
+        <option value="1650.13" name ="version">1650.13</option>
+        <option value="1655.16" name ="version">1655.16</option>
+        <option value="1683.29" name ="version">1683.29</option>
+        <option value="1753.13" name ="version">1753.13</option>
+        <option value="1844.67" name ="version">1844.67</option>
+      </select>      
+
+      <br><br><br>
       
       Ppi (dpi) : <br><br>
 
@@ -55,6 +80,7 @@
         &nbsp&nbsp x  &nbsp&nbsp
         <input type="number" id="second_size">
 
+
         <br><br>
 
 
@@ -65,6 +91,8 @@
             var os = document.getElementById("OS")
             
             var os_version = os.options[os.selectedIndex].value 
+
+            var browser_version = getElementById("")
 
             console.log("os version : " + os_version)
 
@@ -80,7 +108,7 @@
 
             var socket = io()
 
-            socket.emit('sending_settings' , os_version ,  first_size , second_size ,  size_value )
+            socket.emit('sending_settings' , os_version , browser , browser_version , first_size , second_size ,  size_value )
           }
 
         </script>

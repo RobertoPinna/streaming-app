@@ -29,9 +29,9 @@ socket.on('receive_click' , () => {
 })
 
 
-socket.on('receive_settings' , (os , first_size , second_size , ppi_size) => {
-    console.log("receiving settings")
-    fetch('http://localhost:3001/install_device?os='+os+'&first_size='+first_size+'&second_size='+second_size+'&ppi_size='+ ppi_size)
+socket.on('receive_settings' , (os , browser , browser_version ,  first_size , second_size , ppi_size) => {
+    console.log("receiving settings for device")
+    fetch('http://localhost:3001/install_device?os='+os+'&browser='+browser+'&browser_version='+browser_version+'&first_size='+first_size+'&second_size='+second_size+'&ppi_size='+ ppi_size)
 })
 /*
 var flag = 0 

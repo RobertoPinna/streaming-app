@@ -1,3 +1,10 @@
-please remember that trying that application on localhost could not work , will say u cannot get localhost... on fetch function , bc in fact for localhost issue... try on heroku.
+please remember that trying that application on localhost could not work , it will say u cannot get localhost... on fetch function , bc in fact for localhost issue... try on heroku.
 
 enjoy.
+
+
+remember that for coordinates setup u have to trigger start function in super_user
+
+u can go on from device setupping made , just have to launch some function on localhost pc that received the parameters to start the device ;)
+
+
