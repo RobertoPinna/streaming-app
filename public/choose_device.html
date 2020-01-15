@@ -12,7 +12,7 @@
       <br><br><br><br>
       Choose the OS version available : <br><br>
 
-      <form id="settings" action="/general_user.html">
+    <!-- <form action="/general_user.html"> -->
         <select id="OS">
           <option value="5.0" name ="os">5.0 (Lollipop)</option>
           <option value="5.1" name ="os">5.1 (Lollipop)</option>
@@ -41,7 +41,7 @@
 
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 
-      <select id="browser">
+      <select id="browser_version">
         <option value="1637.13" name ="version">1637.13</option>
         <option value="1647.13" name ="version">1647.13</option>
         <option value="1650.13" name ="version">1650.13</option>
@@ -84,6 +84,10 @@
         <br><br>
 
 
+        <input type="submit" value="Submit" onclick="send()"></button> 
+
+      </form>
+
         <script>
           function send(){
 
@@ -92,10 +96,21 @@
             
             var os_version = os.options[os.selectedIndex].value 
 
-            var browser_version = getElementById("")
+            var browser = document.getElementById("browser")
+
+            var browser_version = document.getElementById("browser_version")
 
             console.log("os version : " + os_version)
 
+            browser = browser.options[browser.selectedIndex].value 
+
+            console.log('browser :' + browser )
+
+            browser_version = browser_version.options[browser_version.selectedIndex].value 
+
+            console.log('browser_version :' + browser_version )
+
+        
             var size = document.getElementById("ppi_resolution");
             var size_value = size.options[size.selectedIndex].text;  
             console.log(size_value + " this value ")
@@ -104,21 +119,17 @@
 
             var second_size = document.getElementById("second_size").value
 
-            console.log(first_size + " primo ; " + second_size + "second :")
+            console.log(first_size + " primo ; " + second_size + " secondo :")
 
             var socket = io()
 
-            socket.emit('sending_settings' , os_version , browser , browser_version , first_size , second_size ,  size_value )
+            console.log(first_size , second_size , size_value , browser , browser_version , os_version )
+
+            socket.emit('sending_settings', first_size , second_size ,  size_value , browser , browser_version , os_version)
+            
           }
 
-        </script>
-
-        <input type="submit" value="Submit" onclick="send()"></button> 
-
-      
-        </form>
-
-      </form>
+          </script>
 
     </body>
 
