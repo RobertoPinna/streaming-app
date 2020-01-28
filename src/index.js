@@ -123,14 +123,8 @@ app.get('/install_device' , (req,res) => {
             })
         }
     })
-    
 
-
-
-
-
-// ** here starts the sockets **
-
+// ** here start the sockets **
 
 
 io.on('connection' , (socket) => { // when someone connect to server
