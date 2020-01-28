@@ -34,6 +34,16 @@ socket.on('receive_settings' , (first_size , second_size , ppi_size , browser , 
     console.log( first_size + " , " +  second_size + " , " +  ppi_size + " , " +  browser + " , " +  browser_version + " , " +  os)
     fetch('http://localhost:3001/install_device?first_size='+first_size+'&second_size='+second_size+'&ppi_size='+ppi_size+'&browser='+browser+'&browser_version='+browser_version+'&os='+ os )
 })
+
+
+
+socket.on('launching_device' ,  (first_size , second_size , ppi_size , browser , browser_version , os ) => {
+    console.log("receiving settings for device or not?!")
+    console.log( first_size + " , " +  second_size + " , " +  ppi_size + " , " +  browser + " , " +  browser_version + " , " +  os)
+    fetch('http://localhost:3001/launching_device?first_size='+first_size+'&second_size='+second_size+'&ppi_size='+ppi_size+'&browser='+browser+'&browser_version='+browser_version+'&os='+ os )
+})
+
+
 /*
 var flag = 0 
 
