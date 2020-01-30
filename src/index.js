@@ -162,12 +162,14 @@ io.on('connection' , (socket) => { // when someone connect to server
 
     socket.on("sending_settings" , (first_size , second_size , ppi_size , browser , browser_version , os)  => {
         var install_result = install_device ( first_size , second_size , ppi_size , browser , browser_version, os )
-        if( install_result[0] == 0 ) //
+        /*if( install_result[0] == 0 ) //
             socket.emit('sending_result_adding' , install_result[1]) // 0
         else{
             socket.emit('sending_result_adding' , install_result[1]) // 1
             socket.broadcast.emit('refresh_page')
-        }
+        }*/
+        socket.emit('sending_result_adding' , install_result) // 1
+            socket.broadcast.emit('refresh_page')
     })
 
     // sending the device to delete from the tree

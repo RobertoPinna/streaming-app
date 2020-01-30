@@ -25,7 +25,7 @@ const install_device =  ( first , second , ppi , browser , version , os ) => {
 
     if(number == 0){
         console.log('Device already added! ')
-        return [0 , __dirname]
+        return __dirname // 0 
     }else{
         console.log('Device added appropriarly ! ')
         var jsonContent = JSON.stringify({all_data : all_devices_tree})
@@ -35,7 +35,7 @@ const install_device =  ( first , second , ppi , browser , version , os ) => {
                 return console.log(err);
             }
             console.log("JSON file has been saved.")
-            return [1,__dirname]
+            return __dirname // 1 
         })
        
     }
