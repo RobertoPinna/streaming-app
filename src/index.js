@@ -112,7 +112,7 @@ io.on('connection' , (socket) => { // when someone connect to server
     })
 
     app.post('/receiving_data' , (req , res) => {
-        socket.emit('sending_data' , req.body.all_data)
+        socket.broadcast.emit('sending_data' , req.body.all_data)
         res.send({})
     })
 
@@ -149,7 +149,7 @@ io.on('connection' , (socket) => { // when someone connect to server
     //requesting the data
 
     socket.on('i_want_list_data' , () => { // u have to go to super_user from here
-        socket.emit('send_me_the_data')
+        socket.broadcast.emit('send_me_the_data')
 
         /*
         const{total_elements , total_string } = print_all_devices_tree()
