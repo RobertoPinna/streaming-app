@@ -15,7 +15,7 @@ const remove_and_write = (first , second , ppi , browser , version , os )=> {
     var remove_result = remove_device(first , second , ppi , browser , version , os)
     if ( remove_result != 0 ){
         var jsonContent = JSON.stringify({all_data : all_devices_tree})
-        fs.writeFile("./src/utils/devices_database.json", jsonContent, 'utf8', function (err) {
+        fs.writeFile(__dirname+'/devices_database.json', jsonContent, 'utf8', function (err) {
             if (err) {
                 console.log("An error occured while writing JSON Object to File.");
                 return console.log(err);
