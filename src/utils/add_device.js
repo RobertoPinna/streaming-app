@@ -1,7 +1,13 @@
-const add_device = (all , obj , n ) => {
 
+// the function return 0 if device already exist else another number > 0 
+
+
+
+
+const add_device = (all , obj , n ) => {
+  
     if(obj != undefined){ // here the condition for exiting from the recursive function (if false) if i go to te end of the object i finished to go throught it
-        if(JSON.stringify(all[obj.value]) == JSON.stringify( {} ) || (all[obj.value] == undefined ) )  { // here i add it , if true
+        if(all[obj.value] == undefined)  { // here i add it , if true .. if undefined it means that the object doesn't have the proprieties
             all[obj.value] = {}  
             add_device (all[obj.value] , obj.next , n ) 
             // here is to see if item added (!= 1 ) or not (==1)

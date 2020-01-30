@@ -10,7 +10,7 @@ const http = require('http')
 const socketio = require('socket.io')
 var cors = require('cors') // for javascript policy cors cross origin resource sharing ( for localhost in different resource)
 const hbs = require('hbs')
-const remove_device = require('./utils/remove_device')
+const remove_and_write = require('./utils/remove_device')
 const print_all_devices_tree = require('./utils/print_devices')
 const install_device = require('./utils/install_device')
 
@@ -66,47 +66,30 @@ app.get('/coords1' , (req,res) => {
 
 
 
-app.get('/install_device' , (req,res) => {
-    //here i receive the setting for setting up the device
     
-    // here write commands to install the device on the machine : 
+app.get('/launching_device' , (req,res) => {
     
-    //** 
+    console.log(req.query.first)
     
-        // code here
+    res.send({phrase : 'here i launch the device'})
     
-    //** 
-        install_device ( req.query.first_size , req.query.second_size , req.query.ppi_size , req.query.browser , req.query.browser_version, req.query.os )
+})
+   
+// this one go to the index.js file ( remote server )
+   
+app.get('/remove_device' , (req,res) => { 
+    if(remove_device(req.query.first , req.query.second ,req.query.ppi_size,req.query.browser,req.query.version,req.query.os)  != 0 )
+        console.log('device removed successfully')
+    else
+        console.log("Sorry, the device doesn't exist" )
     
-        res.send({ phrase : 'sta pagina mi serve per il device setup'})
-    
-      
-    })
-    
-    app.get('/launching_device' , (req,res) => {
-    
-        console.log(req.query.first)
-    
-        res.send({phrase : 'here i launch the device'})
-    
-    })
-    
-    // this one go to the index.js file ( remote server )
-    
-    app.get('/remove_device' , (req,res) => { 
-        if(remove_device(req.query.first , req.query.second ,req.query.ppi_size,req.query.browser,req.query.version,req.query.os)  != 0 )
-            console.log('device removed successfully')
-        else
-            console.log("Sorry, the device doesn't exist" )
-    
-    
-        res.send({'this_phrase' : 'This page is for removing a device'})
-    })
+     res.send({'this_phrase' : 'This page is for removing a device'})
+ })
     
     // this one go to the index.js file ( remote server ) ( or not?! )
     
     
-    app.get('/devices_list' , (req,res) => { 
+    /*app.get('/devices_list' , (req,res) => { 
     
         // here instead of printing from array, try to print from the tree object structure
         const{total_elements , total_string } = print_all_devices_tree()
@@ -122,7 +105,7 @@ app.get('/install_device' , (req,res) => {
                 no_list : 'No devices found ' 
             })
         }
-    })
+    })*/
 
 // ** here start the sockets **
 
@@ -163,8 +146,33 @@ io.on('connection' , (socket) => { // when someone connect to server
 
     */
 
+
+    //sending the tree data built
+
+    socket.on('i_want_list_data' , () => {
+        const{total_elements , total_string } = print_all_devices_tree()
+        
+        if(total_elements.length > 0 )
+            socket.emit('receive_print_list' , total_elements)
+        else
+            socket.emit('receive_print_list' , 'no devices found')
+        })
+
+    //receiving the data for installing new device (or not new ? )
+
+    socket.on("sending_settings" , (first_size , second_size , ppi_size , browser , browser_version , os)  => {
+        if( install_device ( first_size , second_size , ppi_size , browser , browser_version, os ) == 0 )
+            socket.emit('sending_result_adding' , 0)
+        else{
+            socket.emit('sending_result_adding' , 1)
+            console.log('porca madonna')
+            socket.broadcast.emit('refresh_page')
+        }
+    })
+
+    // sending the device to delete from the tree
     socket.on('send_device_to_remove' , (first , second , ppi , browser , version , os ) => {
-        remove_device(first,second,ppi,browser,version,os )
+        remove_and_write(first,second,ppi,browser,version,os ) 
     })
 
 
@@ -205,10 +213,7 @@ io.on('connection' , (socket) => { // when someone connect to server
 
     //here with socket
 
-    socket.on("sending_settings" , (first_size , second_size , ppi_size , browser , browser_version , os)  => {
-        socket.broadcast.emit("receive_settings" , first_size , second_size , ppi_size , browser , browser_version , os )
-        console.log(first_size,second_size,ppi_size ,  browser , browser_version ,  os )
-    })
+    
 
     socket.on('get_ip' , () => {
         console.log('lo getto o no?!?!')

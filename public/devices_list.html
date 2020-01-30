@@ -1,0 +1,94 @@
+
+
+<!DOCTYPE html>
+
+
+<html>
+
+    <head>
+
+        <script src="/socket.io/socket.io.js"></script>
+        
+        <style>
+
+             .button1 , .button2 , .paragraph {
+                display:inline-block;
+             }
+    
+             .button1 , .button2  {
+                margin:5px;
+                padding:10px;
+            }
+
+            .flex{
+                float:right;
+                margin-right : 60%;
+            }
+
+        </style>
+
+        
+    </head>
+
+        <body>
+
+            
+                Trying to show devices list
+                <br /><br />
+
+                <div id="messages"></div>                
+                
+                    <script id="list" type="text/html" >
+
+                        {{#message}}
+
+                            {{^first}}<p>No devices found </p>{{/first}}
+
+                            {{#first}}
+                            <div class="paragraph">
+                                
+                                <p id="list_row">
+                                  {{first}} - {{second}} - {{ppi_size}} - {{browser}} - {{version}} - {{os}} 
+                                </p>
+                            </div>
+
+                            <div class="flex">
+                                <button class="button1" type="button"> Run </button>
+                                <button class="button2" type="button" onclick="remove_device( '{{first}}', '{{second}}' ,'{{ppi_size}}' , '{{browser}}' , '{{version}}' , '{{os}}' )"> Remove</button>
+                            </div>
+               
+                        <br><br>
+                            {{/first}}
+                        {{/message}}
+                    </script>
+
+                    <form action="/index.html">
+                        <button id="index_page">Back to homepage</button>
+                    </form>
+
+
+
+        <script>
+
+            var run_device = (first , second , ppi , browser , version , os ) => {
+                socket.emit('send_device_to_run' , first , second , ppi , browser , version , os )
+            }
+
+            var remove_device = (first , second , ppi , browser , version , os ) => {
+                socket.emit('send_device_to_remove' , first , second , ppi , browser , version , os )
+                reload_page()
+            }
+
+        </script>
+        
+            <script src="/js/mustache.min.js"></script>
+            <script src="/js/moment.min.js"></script>
+            <script src="/js/devicelist.js"></script>
+            <script src="/js/qs.min.js"></script>
+
+        </body>
+
+
+</html>
+
+

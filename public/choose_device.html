@@ -84,13 +84,43 @@
         <br><br>
 
 
-        <input type="submit" value="Submit" onclick="send()"></button> 
-
+        <input type="submit" value="Submit" onclick="send()"> 
+      
+      <br><br><br><br>
       </form>
 
-        <script>
-          function send(){
+      <form action='/devices_list.html'>
+      
+      <button type="submit">Devices list </button>
+      
+      </form>
 
+      <br><br><br>
+
+      <form action="/index.html">
+        <button id="index_page">Back to homepage</button>
+      </form>
+
+
+      <div>
+        <p id='result_adding'></p>
+
+      </div>
+
+        <script>
+          var socket = io()
+
+          socket.on('sending_result_adding' , (value_result) => {
+            var text = document.getElementById('result_adding')
+            text.innerHTML = 'Sorry device already added'
+            text.style.color = 'red'
+            if(value_result > 0 ){
+              text.innerHTML = 'Device successfully added ! '
+              text.style.color = 'green'
+            }
+           })
+
+          function send(){
 
             var os = document.getElementById("OS")
             
@@ -121,7 +151,7 @@
 
             console.log(first_size + " primo ; " + second_size + " secondo :")
 
-            var socket = io()
+           
 
             console.log(first_size , second_size , size_value , browser , browser_version , os_version )
 

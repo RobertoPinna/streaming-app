@@ -68,7 +68,6 @@ $messageFormLocation.addEventListener('click' , () => {
         $messageFormLocation.setAttribute('disabled' , 'disabled')
 
         navigator.geolocation.getCurrentPosition ( (position) => {
-            console.log('daiporcarca')
             console.log(position.coords)
             socket.emit('sendLocation' ,  {
                 latitude : position.coords.latitude , 

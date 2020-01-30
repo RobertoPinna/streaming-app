@@ -8,3 +8,10 @@ remember that for coordinates setup u have to trigger start function in super_us
 u can go on from device setupping made , just have to launch some function on localhost pc that received the parameters to start the device ;)
 
 
+
+
+remember about sockets : 
+- socket.broadcast.emit  --> will send data to others client , different from the coming one ( u need it for this purpose, can't use emit)
+
+- socket.emit -> will send data just to the client who sent she request, just to him 
+

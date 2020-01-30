@@ -5,6 +5,10 @@ const create_object = require ('./create_device')
 
 let rawdata = fs.readFileSync(__dirname+'/devices_database.json');
 
+// here i read the data tree before checking if i can add a device
+//based on add_device return , i'll return 0 if already added else 1
+
+var all_devices_tree = {}
 
 try{
     all_devices_tree = JSON.parse(rawdata).all_data
@@ -12,14 +16,15 @@ try{
     console.log('error reading the file ')
 }
 
-
-const install_device =  ( first , second , ppi , browser , version , os ) => {
+// here i create ad object so i can use add_device function
+const install_device =  ( first , second , ppi , browser , version , os ) => {  
 
     var obj = create_object ( first , second , ppi , browser , version , os   )
-
     var number = add_device(all_devices_tree , obj , 0 )
+
     if(number == 0){
         console.log('Device already added! ')
+        return 0
     }else{
         console.log('Device added appropriarly ! ')
         var jsonContent = JSON.stringify({all_data : all_devices_tree})
@@ -28,8 +33,10 @@ const install_device =  ( first , second , ppi , browser , version , os ) => {
                 console.log("An error occured while writing JSON Object to File.");
                 return console.log(err);
             }
-            console.log("JSON file has been saved.");
-        });
+            console.log("JSON file has been saved.")
+            return 1
+        })
+       
     }
 
 }
