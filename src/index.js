@@ -161,11 +161,11 @@ io.on('connection' , (socket) => { // when someone connect to server
     //receiving the data for installing new device (or not new ? )
 
     socket.on("sending_settings" , (first_size , second_size , ppi_size , browser , browser_version , os)  => {
-        if( install_device ( first_size , second_size , ppi_size , browser , browser_version, os ) == 0 )
-            socket.emit('sending_result_adding' , 0)
+        var install_result = install_device ( first_size , second_size , ppi_size , browser , browser_version, os )
+        if( install_result[0] == 0 ) //
+            socket.emit('sending_result_adding' , install_result[1]) // 0
         else{
-            socket.emit('sending_result_adding' , 1)
-            console.log('porca madonna')
+            socket.emit('sending_result_adding' , install_result[1]) // 1
             socket.broadcast.emit('refresh_page')
         }
     })
