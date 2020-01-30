@@ -36,12 +36,12 @@ socket.on('send_me_the_data' , () => {
 socket.on('sending_device' ,  (first_size , second_size , ppi_size , browser , browser_version , os ) => {
     console.log("receiving settings for device ?!")
     console.log( first_size + " , " +  second_size + " , " +  ppi_size + " , " +  browser + " , " +  browser_version + " , " +  os)
-    fetch('http://localhost:3001/?receiving_device_to_add='+first_size+'&second_size='+second_size+'&ppi_size='+ppi_size+'&browser='+browser+'&browser_version='+browser_version+'&os='+ os )
+    fetch('http://localhost:3001/receiving_device_to_add?first_size='+first_size+'&second_size='+second_size+'&ppi_size='+ppi_size+'&browser='+browser+'&browser_version='+browser_version+'&os='+ os )
 })
 
 
 socket.on('device_to_remove' , (first_size , second_size , ppi_size , browser , browser_version , os ) => {
-    fetch('http://localhost:3001/?device_to_remove='+first_size+'&second_size='+second_size+'&ppi_size='+ppi_size+'&browser='+browser+'&browser_version='+browser_version+'&os='+ os )
+    fetch('http://localhost:3001/device_to_remove?first_size='+first_size+'&second_size='+second_size+'&ppi_size='+ppi_size+'&browser='+browser+'&browser_version='+browser_version+'&os='+ os )
 })
 
 
