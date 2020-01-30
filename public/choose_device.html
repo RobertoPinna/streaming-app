@@ -112,6 +112,7 @@
 
           socket.on('sending_result_adding' , (value_result) => {
             var text = document.getElementById('result_adding')
+            console.log(value_result)
             text.innerHTML = 'Sorry device already added'
             text.style.color = 'red'
             if(value_result > 0 ){
