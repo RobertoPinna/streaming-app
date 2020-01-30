@@ -137,9 +137,11 @@ io.on('connection' , (socket) => { // when someone connect to server
 
     */
 
+    // check this one 
+
     socket.on('sending_settings' , (first , second , ppi , browser , version , os ) => {
 
-        socket.emit('sending_device' , (first , second , ppi , browser , version , os ))
+        socket.broadcast.emit('sending_device' , (first , second , ppi , browser , version , os ))
 
     })
 
