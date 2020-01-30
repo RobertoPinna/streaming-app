@@ -9,7 +9,7 @@ const messageTemplate = document.querySelector('#list').innerHTML // here the te
 
 socket.emit('i_want_list_data')
 
-socket.on('receive_print_list' , (list) => {
+socket.on('sending_data' , (list) => {
     console.log(list)
     const html = Mustache.render(messageTemplate , {
         message :  list    

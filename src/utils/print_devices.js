@@ -1,7 +1,11 @@
 
 const fs = require('fs')
 
-let rawdata = fs.readFileSync(__dirname+'/devices_database.json');
+//const readFile = require('./my_file_with_function')
+
+// all_devices_tree = readFile()
+
+let rawdata = fs.readFileSync(__dirname+'/devices_database.json')
 
 
 try{
@@ -64,6 +68,6 @@ const print_partial_all_devices_tree = (x , callback ,  all_list , stringa  ) =>
 }
 
 
-
+sessionStorage.setItem("favoriteMovie", favoritemovie);
 
 module.exports = print_all_devices_tree

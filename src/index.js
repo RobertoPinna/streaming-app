@@ -10,12 +10,6 @@ const http = require('http')
 const socketio = require('socket.io')
 var cors = require('cors') // for javascript policy cors cross origin resource sharing ( for localhost in different resource)
 const hbs = require('hbs')
-const remove_and_write = require('./utils/remove_device')
-const print_all_devices_tree = require('./utils/print_devices')
-const install_device = require('./utils/install_device')
-
-all_list_devices = [] 
-
 
 var x_init = 0
 var x_end = 0
@@ -86,26 +80,7 @@ app.get('/remove_device' , (req,res) => {
      res.send({'this_phrase' : 'This page is for removing a device'})
  })
     
-    // this one go to the index.js file ( remote server ) ( or not?! )
-    
-    
-    /*app.get('/devices_list' , (req,res) => { 
-    
-        // here instead of printing from array, try to print from the tree object structure
-        const{total_elements , total_string } = print_all_devices_tree()
-    
-        if(total_elements.length > 0 ){
-            all_list_devices = total_elements
-            res.render('device_list', {
-                lista_array : all_list_devices
-            })
-        }
-        else{
-            res.render('device_list', {
-                no_list : 'No devices found ' 
-            })
-        }
-    })*/
+
 
 // ** here start the sockets **
 
@@ -128,13 +103,29 @@ io.on('connection' , (socket) => { // when someone connect to server
         res.send({})
     })
 
+
     //****************** */ try with receiving socket event instead on page, receive socket event and send socket
 
     app.get('/image1' , (req,res, next) => {
-
         socket.broadcast.emit('stream_server', immagine)
         res.send({})
     })
+
+    app.post('/receiving_data' , (req , res) => {
+        socket.emit('sending_data' , req.body.all_data)
+        res.send({})
+    })
+
+    app.get('/result_adding' , (req , res) => {
+        socket.emit('sending_result_adding' , req.body.result_adding )
+        socket.emit('refresh_page') 
+        res.send({})
+    })
+
+
+
+    
+
 
     /*
     socket.on('stream' , (image) => {
@@ -146,35 +137,32 @@ io.on('connection' , (socket) => { // when someone connect to server
 
     */
 
+    socket.on('sending_settings' , (first , second , ppi , browser , version , os ) => {
 
-    //sending the tree data built
+        socket.emit('sending_device' , (first , second , ppi , browser , version , os ))
 
-    socket.on('i_want_list_data' , () => {
+    })
+
+
+    //requesting the data
+
+    socket.on('i_want_list_data' , () => { // u have to go to super_user from here
+        socket.emit('send_me_the_data')
+
+        /*
         const{total_elements , total_string } = print_all_devices_tree()
         
         if(total_elements.length > 0 )
             socket.emit('receive_print_list' , total_elements)
         else
-            socket.emit('receive_print_list' , 'no devices found')
-        })
+            socket.emit('receive_print_list' , 'no devices found')*/
+    })
 
     //receiving the data for installing new device (or not new ? )
 
-    socket.on("sending_settings" , (first_size , second_size , ppi_size , browser , browser_version , os)  => {
-        var install_result = install_device ( first_size , second_size , ppi_size , browser , browser_version, os )
-        /*if( install_result[0] == 0 ) //
-            socket.emit('sending_result_adding' , install_result[1]) // 0
-        else{
-            socket.emit('sending_result_adding' , install_result[1]) // 1
-            socket.broadcast.emit('refresh_page')
-        }*/
-        socket.emit('sending_result_adding' , install_result) // 1
-            socket.broadcast.emit('refresh_page')
-    })
-
     // sending the device to delete from the tree
     socket.on('send_device_to_remove' , (first , second , ppi , browser , version , os ) => {
-        remove_and_write(first,second,ppi,browser,version,os ) 
+        socket.emit('device_to_remove' , first , second , ppi , browser , version , os )
     })
 
 
