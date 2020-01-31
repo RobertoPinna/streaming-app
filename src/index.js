@@ -164,7 +164,7 @@ io.on('connection' , (socket) => { // when someone connect to server
 
     // sending the device to delete from the tree
     socket.on('send_device_to_remove' , (first , second , ppi , browser , version , os ) => {
-        socket.emit('device_to_remove' , first , second , ppi , browser , version , os )
+        socket.broadcast.emit('device_to_remove' , first , second , ppi , browser , version , os )
     })
 
 
