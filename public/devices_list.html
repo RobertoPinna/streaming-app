@@ -72,6 +72,7 @@
 
             var run_device = (first , second , ppi , browser , version , os ) => {
                 socket.emit('send_device_to_run' , first , second , ppi , browser , version , os )
+                console.log('here the console check')
             }
 
             var remove_device = (first , second , ppi , browser , version , os ) => {
