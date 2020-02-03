@@ -147,6 +147,8 @@ var displayMediaOptions = {
         try { 
             const videoTry = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions); 
             videoElem.srcObject = videoTry
+
+            dumpOptionsInfo()
             
             /*const video_constraints = {
                 width: 200 ,
