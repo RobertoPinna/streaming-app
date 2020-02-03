@@ -1,7 +1,9 @@
 
 const fs = require('fs')
 const create_object = require('./create_device')
-const pint_all_devices_tree = require('./print_devices')
+const print_all_devices_tree = require('./print_devices')
+const fetch = require('./fetch_function')
+
 
 let rawdata = fs.readFileSync(__dirname+'/devices_database.json');
 
@@ -12,8 +14,9 @@ try{
     console.log('error reading the file ')
 }
 
+
 const remove_and_write = (first , second , ppi , browser , version , os ) => {
-    var remove_result = remove_device(first , second , ppi , browser , version , os)
+    const  remove_result = remove_device(first , second , ppi , browser , version , os)
     if ( remove_result != 0 ){
 
         const{total_elements , total_string } = print_all_devices_tree()
@@ -29,13 +32,12 @@ const remove_and_write = (first , second , ppi , browser , version , os ) => {
             body: JSON.stringify( { all_data : total_elements } )
         }
 
-        fetch('https://streaming-app-roby.herokuapp.com/receiving_data', options)
+        fetch('https://streaming-app-roby.herokuapp.com/receiving_data', 1 ,  options)
 
-
-        var jsonContent = JSON.stringify({all_data : all_devices_tree})
+        const  jsonContent = JSON.stringify({all_data : all_devices_tree})
 
         setTimeout( () => {
-            fs.writeFile(__dirname+'/devices_database.json', jsonContent, 'utf8', function (err) {
+            fs.writeFileSync(__dirname+'/devices_database.json', jsonContent, 'utf8', function (err) {
                 if (err) {
                     console.log("An error occured while writing JSON Object to File.");
                     return console.log(err);
@@ -43,9 +45,9 @@ const remove_and_write = (first , second , ppi , browser , version , os ) => {
                 console.log("JSON file has been saved.")
                 return 1
             })
-        } , 300 ) 
+        } , 100 ) 
     }
-    return 0 
+    else return 0 
 }
 
 const remove_device = (first , second , ppi , browser , verison , os ) => {

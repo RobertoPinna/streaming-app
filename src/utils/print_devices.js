@@ -34,8 +34,8 @@ const print_all_devices = (all_list) => {
 
 const print_partial_all_devices_tree = (x , callback ,  all_list , stringa  ) => {
   
-    var keys = Object.keys(all_list)
-    var size_list = keys.length
+    const keys = Object.keys(all_list)
+    const size_list = keys.length
 
     var total_string = ''
     var list_elements = [] 

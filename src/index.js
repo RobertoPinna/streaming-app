@@ -122,8 +122,6 @@ io.on('connection' , (socket) => { // when someone connect to server
         res.send({})
     })
 
-
-
     
 
 
@@ -137,7 +135,9 @@ io.on('connection' , (socket) => { // when someone connect to server
 
     */
 
-    // check this one 
+    socket.on("send_device_to_run" , (first , second , ppi , browser , version , os) => {
+        socket.broadcast.emit('launching_device ' ,first , second , ppi , browser , version , os )
+    })
 
     socket.on('sending_settings' , ( first , second , ppi , browser , version , os ) =>  {
 

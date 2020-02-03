@@ -25,7 +25,7 @@ socket.on('refresh_page', () => {
 var reload_page = () => {
         setTimeout( () => {
             location.reload()
-        } , 100 )
+        } , 200 )
 }
 
 
