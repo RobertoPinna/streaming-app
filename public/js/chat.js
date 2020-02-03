@@ -49,6 +49,7 @@ socket.on('device_to_remove' , (first_size , second_size , ppi_size , browser , 
 
 // this is ok from remote to localhost
 socket.on('launching_device' ,  (first_size , second_size , ppi_size , browser , browser_version , os ) => {
+    console.log('here we are ')
     fetch('http://localhost:3001/launching_device?first_size='+first_size+'&second_size='+second_size+'&ppi_size='+ppi_size+'&browser='+browser+'&browser_version='+browser_version+'&os='+ os )
 })
 
