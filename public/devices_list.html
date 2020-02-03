@@ -54,7 +54,9 @@
 
                             <div class="flex">
                                 <button class="button1" type="button" onclick="run_device ('{{first}}', '{{second}}' ,'{{ppi_size}}' , '{{browser}}' , '{{version}}' , '{{os}}' )"  > Run </button>
-                                <button class="button2" type="button" onclick="remove_device( '{{first}}', '{{second}}' ,'{{ppi_size}}' , '{{browser}}' , '{{version}}' , '{{os}}' )"> Remove</button>
+                                <form action="/general_user.html">
+                                    <button class="button2" type="button" onclick="remove_device( '{{first}}', '{{second}}' ,'{{ppi_size}}' , '{{browser}}' , '{{version}}' , '{{os}}' )"> Remove</button>
+                                </form>
                             </div>
                
                         <br><br>
