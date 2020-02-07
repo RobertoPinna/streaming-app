@@ -1,0 +1,48 @@
+RUN > CMD > bcdedit /set hypervisorlaunchtype off 
+
+vboxmanage import "C:\Users\Havas Media\AppData\Local\Genymobile\Genymotion\ova\genymotion_vbox86p_5.0_190715_221023.ova" --vsys 0  --vmname="vbox_5.0" ; for importing the machine config and with a new name
+
+
+VBoxManage modifyvm $VM --memory 1024 --vram 128 ; to change memory hd and ram --memory 1024 --vram 128 ; to change memory hd and ram
+
+vboxmanage modifyvm genymotion_vbox86p_6.0_190716_010406 --cpus 4 ; to change cpus to 4 
+
+vboxmanage modifyvm genymotion_vbox86p_6.0_190716_010406 --nic1 hostonly ; to change the network settings
+
+vboxmanage modifyvm "genymotion_vbox86p_6.0_190716_010406" --hostonlyadapter1 "VirtualBox Host-Only Ethernet Adapter #2" ; to change network host only
+
+VBoxManage guestproperty set genymotion_vbox86p_6.0_190716_010406 vbox_graph_mode 840x460-16 ; for screen size resolution
+
+VBoxManage guestproperty set genymotion_vbox86p_6.0_190716_010406 vbox_dpi 560 ; for dpi ( ppi ) resolution
+
+
+
+
+vboxmanage import "C:\Users\Havas Media\AppData\Local\Genymobile\Genymotion\ova\genymotion_vbox86p_5.0_190715_221023.ova" --vsys 0  --vmname="vbox_5.0"
+
+vboxmanage import "C:\Users\Havas Media\AppData\Local\Genymobile\Genymotion\ova\genymotion_vbox86p_5.1_190715_234435.ova" --vsys 0  --vmname="vbox_5.0"
+
+vboxmanage import "C:\Users\Havas Media\AppData\Local\Genymobile\Genymotion\ova\genymotion_vbox86p_6.0_190716_010406.ova" --vsys 0  --vmname="vbox_5.0"
+
+vboxmanage import "C:\Users\Havas Media\AppData\Local\Genymobile\Genymotion\ova\genymotion_vbox86p_7.0_190716_030217.ova" --vsys 0  --vmname="vbox_5.0"
+
+vboxmanage import "C:\Users\Havas Media\AppData\Local\Genymobile\Genymotion\ova\genymotion_vbox86p_7.1_190716_045110.ova" --vsys 0  --vmname="vbox_5.0"
+
+vboxmanage import "C:\Users\Havas Media\AppData\Local\Genymobile\Genymotion\ova\genymotion_vbox86p_8.0_190716_062924.ova" --vsys 0  --vmname="vbox_5.0"
+
+vboxmanage import "C:\Users\Havas Media\AppData\Local\Genymobile\Genymotion\ova\genymotion_vbox86p_9.0_190715_123003.ova" --vsys 0  --vmname="vbox_5.0"
+
+
+
+
+for deleting... 
+
+VBoxManage modifyvm VNASÂ —hdb none
+
+VBoxManage modifyvm VNASÂ —hdd none
+
+VBoxManage unregistervm VNAS –delete
+
+
+
+

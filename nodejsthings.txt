@@ -1,0 +1,119 @@
+ 
+the command above is for connecting to the database
+npm run dev ( dependencies in package.json file .. for launching the server)
+`
+
+a lot of libraries and method : 
+link to doc : https://mongoosejs.com/docs/
+
+-express module for lanching pages on the server , with the index.js appropriate files and hbs for loading pages(dinamically)
+
+-mongoose (module)
+-findIdByname...
+-find...
+-findoAndDelete../update...others..
+-modules...
+-check on api, model, queries in guides..
+
+
+-httpsstatuses.com // for status page result after a request of a page
+
+for password encrypt
+
+-bcryptjs module
+
+-middlewear for manage behaviour of module, u can find it on mongoose doc 
+-validate, save.... (events)
+
+
+
+
+in models we have just the models of the table in the database, in routers we manage operations on that table
+but if we want to use middlewear we have to do some changes to the code, so the terminal print the middlewear console.log we wrote before
+
+
+for regular expression :
+regex101.com:
+\. is for serching string .. e.g. : \.doc after the $ character is for at the end of the string, not in the middle 
+the | means this expression or this one .. so : \.(doc|docs)$ search for string that has at the end doc or docs
+
+
+we use npm i mudule --save-dev for saving the module locally, so when we need it locally and not installed by depencencies
+
+we have to add in package.json under dev field under dev proprieties this following : 'env-cmd ./config/dev.env' .... nodemon src/index.js
+
+password for mongoDB Atlas : passWORD1
+
+for git config : 
+git config  user.email "pinnapinna@hotmail.it"
+git config  user.name "Roberto"
+git config --local -l
+
+with heroku : 
+heroku create pinna-task-manager --> this name has to be unique in the world
+
+to push : git push heroku master
+
+for adding test : open package.json and write under scipts proprieties : "test" : "jest"
+we have to install jest before that 
+run test
+after, he said to add in : "test" : "jest --watch" to add some options ( in real time.. compile time)
+for tests : https://jestjs.io/docs/en/expect
+	    https://mochajs.org/
+
+notice that in test.env and dev.env we have the same written so are the same file, except for the name of the database, bc everytime i launch a test i don't
+want to that the test write on my database, so i change the database name so it populate another database
+
+for adding now the config customize option we have to add inside package.json under test : 
+"env-cmd ./config/test.env jest --watch"
+we need also to add jest proprieties
+
+
+--runInBand in package.json under test  .. jest... it serves for running my tests in series making sure they don't overlap or conflicts.
+
+--save-dev for install a package as a development dependency
+
+client->server communications ; when client send a message to the server
+server-> client communications ; when the server send to the others client the message received before from a client server
+
+server (emit) -> client(s) receive -> countUpdated
+client (emit) -> server (receive) -> increment
+
+npm run dev // as always
+
+
+admin privilegies
+adb root
+adb shell
+pm list package
+pm uninstall --user 0 com.package.name (com.android.chrome)
+exit
+adb install path_to_apk
+
+export password for certificate of apk : robypinna
+
+
+vboxmanage import "C:\Users\Havas Media\AppData\Local\Genymobile\Genymotion\ova\genymotion_vbox86p_6.0_190716_010406.ova"
+;create standard OS (api 6.0 in this case) empty , have to configure later.
+
+
+VBoxManage list vms ; for listing devices available to launch 
+
+VBoxManage modifyvm $VM --memory 1024 --vram 128 ; to change memory hd and ram .. $VM -> virtual machine name (device name)
+
+vboxmanage modifyvm genymotion_vbox86p_6.0_190716_010406 --cpus 4 ; to change cpus to 4 
+
+vboxmanage modifyvm genymotion_vbox86p_6.0_190716_010406 --nic1 hostonly ; to change the network settings
+
+VBoxManage guestproperty set genymotion_vbox86p_6.0_190716_010406 vbox_graph_mode 840x460-16 ; for screen size resolution
+
+VBoxManage guestproperty set genymotion_vbox86p_6.0_190716_010406 vbox_dpi 560 ; for dpi ( ppi ) resolution
+
+player --vm-name genymotion_vbox86p_6.0_190716_010406
+
+player --vm-name genymotion_genymotion_vbox86p_5.1_190715_234435
+
+player --vm-name "Samsung Galaxy S2 - 2.3.7 - API 10 - 480x800" ; for launching a device
+
+
+
