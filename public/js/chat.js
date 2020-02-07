@@ -28,31 +28,20 @@ socket.on('receive_click' , () => {
 
 })
 
-socket.on('send_me_the_data' , () => {
-    console.log('requesting the data')
-    fetch('http://localhost:3001/database')
-})
 
-socket.on('sending_device' ,  (first_size , second_size , ppi_size , browser , browser_version , os ) => {
-    console.log("receiving settings for device ?!")
+socket.on('receive_settings' , (first_size , second_size , ppi_size , browser , browser_version , os ) => {
+    console.log("receiving settings for device or not?!")
     console.log( first_size + " , " +  second_size + " , " +  ppi_size + " , " +  browser + " , " +  browser_version + " , " +  os)
-    fetch('http://localhost:3001/receiving_device_to_add?first_size='+first_size+'&second_size='+second_size+'&ppi_size='+ppi_size+'&browser='+browser+'&browser_version='+browser_version+'&os='+ os )
-})
-
-
-socket.on('device_to_remove' , (first_size , second_size , ppi_size , browser , browser_version , os ) => {
-    fetch('http://localhost:3001/device_to_remove?first_size='+first_size+'&second_size='+second_size+'&ppi_size='+ppi_size+'&browser='+browser+'&browser_version='+browser_version+'&os='+ os )
+    fetch('http://localhost:3001/install_device?first_size='+first_size+'&second_size='+second_size+'&ppi_size='+ppi_size+'&browser='+browser+'&browser_version='+browser_version+'&os='+ os )
 })
 
 
 
-
-// this is ok from remote to localhost
 socket.on('launching_device' ,  (first_size , second_size , ppi_size , browser , browser_version , os ) => {
-    console.log('here we are ')
+    console.log("receiving settings for device or not?!")
+    console.log( first_size + " , " +  second_size + " , " +  ppi_size + " , " +  browser + " , " +  browser_version + " , " +  os)
     fetch('http://localhost:3001/launching_device?first_size='+first_size+'&second_size='+second_size+'&ppi_size='+ppi_size+'&browser='+browser+'&browser_version='+browser_version+'&os='+ os )
 })
-
 
 
 /*
@@ -88,6 +77,9 @@ socket.on('print_ip' , (ip_address) => {
 })
 
 
+
+
+
 // Options for getDisplayMedia()
 
 var displayMediaOptions = {
@@ -118,7 +110,7 @@ var displayMediaOptions = {
     function viewVideo(video , context){
 
         context.drawImage(video , 0 , 0 , context.width  , context.height )
-        //socket.emit('stream' , canvas.toDataURL('image/jpeg')) // that was too slow
+        //socket.emit('stream' , canvas.toDataURL('image/jpeg'))
         
         const options = {
             method: 'POST',
@@ -128,7 +120,7 @@ var displayMediaOptions = {
             body: JSON.stringify( { immagine : canvas.toDataURL('image/jpeg') } )
           }
       
-          // with socket too slow? , try again maybe? socket.emit .. so here i try with fetch..
+          // with socket too slow? , try again maybe? socket.emit ..
 
           //fetch('http://localhost:3000/image1', options)
           //right one
@@ -147,8 +139,6 @@ var displayMediaOptions = {
         try { 
             const videoTry = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions); 
             videoElem.srcObject = videoTry
-
-            dumpOptionsInfo()
             
             /*const video_constraints = {
                 width: 200 ,
@@ -165,6 +155,9 @@ var displayMediaOptions = {
             context.width = canvas.width 
             context.height = canvas.height
             //context.imageSmoothingEnabled = false
+
+
+             
 
             setInterval( () => {
                 //if(context)

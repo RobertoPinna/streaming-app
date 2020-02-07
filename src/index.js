@@ -60,31 +60,6 @@ app.get('/coords1' , (req,res) => {
 
 
 
-    
-app.get('/launching_device' , (req,res) => {
-    
-    console.log(req.query.first)
-    
-    res.send({phrase : 'here i launch the device'})
-    
-})
-   
-// this one go to the index.js file ( remote server )
-   
-app.get('/remove_device' , (req,res) => { 
-    if(remove_device(req.query.first , req.query.second ,req.query.ppi_size,req.query.browser,req.query.version,req.query.os)  != 0 )
-        console.log('device removed successfully')
-    else
-        console.log("Sorry, the device doesn't exist" )
-    
-     res.send({'this_phrase' : 'This page is for removing a device'})
- })
-    
-
-
-// ** here start the sockets **
-
-
 io.on('connection' , (socket) => { // when someone connect to server
 
     sock = socket
@@ -103,27 +78,13 @@ io.on('connection' , (socket) => { // when someone connect to server
         res.send({})
     })
 
-
     //****************** */ try with receiving socket event instead on page, receive socket event and send socket
 
     app.get('/image1' , (req,res, next) => {
+
         socket.broadcast.emit('stream_server', immagine)
         res.send({})
     })
-
-    app.post('/receiving_data' , (req , res) => {
-        socket.broadcast.emit('sending_data' , req.body.all_data)
-        res.send({})
-    })
-
-    app.get('/result_adding' , (req , res) => {
-        socket.broadcast.emit('sending_result_adding' , req.query.result_adding )
-        socket.broadcast.emit('refresh_page') 
-        res.send({})
-    })
-
-    
-
 
     /*
     socket.on('stream' , (image) => {
@@ -134,38 +95,6 @@ io.on('connection' , (socket) => { // when someone connect to server
 
 
     */
-
-    socket.on('send_device_to_run' , (first , second , ppi , browser , version , os) => {
-        socket.broadcast.emit('launching_device' ,first , second , ppi , browser , version , os )
-    })
-
-    socket.on('sending_settings' , ( first , second , ppi , browser , version , os ) =>  {
-
-        socket.broadcast.emit('sending_device' , first , second , ppi , browser , version , os  )
-
-    })
-
-    //requesting the data
-
-    socket.on('i_want_list_data' , () => { // u have to go to super_user from here
-        socket.broadcast.emit('send_me_the_data')
-
-        /*
-        const{total_elements , total_string } = print_all_devices_tree()
-        
-        if(total_elements.length > 0 )
-            socket.emit('receive_print_list' , total_elements)
-        else
-            socket.emit('receive_print_list' , 'no devices found')*/
-    })
-
-    //receiving the data for installing new device (or not new ? )
-
-    // sending the device to delete from the tree
-    socket.on('send_device_to_remove' , (first , second , ppi , browser , version , os ) => {
-        socket.broadcast.emit('device_to_remove' , first , second , ppi , browser , version , os )
-    })
-
 
     socket.on('send_area_coordinates' , (area_x_init , area_x_end , area_y_init , area_y_end ) => {
         x_init = area_x_init
@@ -204,7 +133,10 @@ io.on('connection' , (socket) => { // when someone connect to server
 
     //here with socket
 
-    
+    socket.on("sending_settings" , (first_size , second_size , ppi_size , browser , browser_version , os)  => {
+        socket.broadcast.emit("receive_settings" , first_size , second_size , ppi_size , browser , browser_version , os )
+        console.log(first_size,second_size,ppi_size ,  browser , browser_version ,  os )
+    })
 
     socket.on('get_ip' , () => {
         console.log('lo getto o no?!?!')
