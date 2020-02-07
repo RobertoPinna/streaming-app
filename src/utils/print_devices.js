@@ -14,7 +14,7 @@ const print_all_devices_tree = () => {
 }
 
 const print_all_devices = (all_list) => {
-    const{el, all_elements ,  str_list } = print_partial_all_devices_tree(0 , (x) => {
+    const{all_elements ,  str_list } = print_partial_all_devices_tree(0 , (x) => {
         if (x == 0)
             return 'first'
         if(x == 1 )

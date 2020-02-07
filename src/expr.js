@@ -15,13 +15,12 @@ var cors = require('cors')
 const d3 = require('d3-scale')
 const fs = require('fs')
 
-//const add_device = require(__dirname+'')
-
-console.log(__dirname+'/../')
+const install_device = require(__dirname+'/utils/install_device')
+const print_devices = require(__dirname+'/utils/print_devices')
 
 const {spawn} = require('child_process')
 
-let rawdata = fs.readFileSync(__dirname+'/utils/devices_database.json');
+let rawdata = fs.readFileSync(__dirname+'/utils/devices_database.json')
 /*
 fs.writeFile(__dirname + "/../../database.json", 'jsonContent', 'utf8', function (err) {
     if (err) {
@@ -81,49 +80,25 @@ app.get('/prova1',  (req,res) => {
     res.send({speriamo : 'sperem'})
 })
 
-app.get('/install_device' , (req,res) => {
+app.get('/receiving_device_to_add' , (req,res) => {
 //here i receive the setting for setting up the device
 // this is the default string to install the new device
 
 // here write commands to install the device on the machine
 
-    var obj = create_object ( req.query.first_size , req.query.second_size , req.query.ppi_size , req.query.browser , req.query.browser_version, req.query.os   )
+//
+    if (install_device){
+        rawdata = fs.readFileSync(__dirname+'/utils/devices_database.json');
+        try{
+            all_devices_tree = JSON.parse(rawdata).all_data
+        }catch(e){
+            console.log('error reading the file ')
+        }
 
-    console.log(obj)
-    var number = add_device(all_devices_tree , obj , 0 )
-    if(number == 0){
-        console.log('Device already added! ')
-    }else{
-        console.log('Device added appropriarly ! ')
-        var jsonContent = JSON.stringify({all_data : all_devices_tree})
-        console.log(jsonContent)
- 
-        fs.writeFile("devices_database.json", jsonContent, 'utf8', function (err) {
-            if (err) {
-                console.log("An error occured while writing JSON Object to File.");
-                return console.log(err);
-            }
-            console.log("JSON file has been saved.");
-        })
+        fetch('https://streaming-app-roby.herokuapp.com/refresh_pages')
+
     }
 
-
-    console.log('this object : ')
-    console.log(all_devices_tree)
-
-    
-    const{total_elements , total_string } = print_all_devices_tree(all_devices_tree )
-
-    all_list_devices = total_elements
-
-    console.log(all_list_devices)
-
-    console.log(total_string)
-
-
-
-//here it is better launching it thinking about the new settings from VBOX instead of java automation tool UI 
-    
 
     res.send({ phrase : 'sta pagina mi serve per il device setup'})
 
@@ -138,16 +113,16 @@ app.get('/launching_device' , (req,res) => {
 
 })
 
+// here always reading from the variable all_devices_tree
+
 app.get('/devices_list' , (req,res) => { // this function has to be on the other server, remote one, index.js file
 
     console.log(all_devices_tree)
 
-    var jsonObj = {all_data : all_devices_tree};
+    const {total_elements , total_string} = print_devices()
 
-    if(remove_device(all_devices_tree , create_object('201' , '20' ,'120','Chrome','1637.13','5.0'))  != 0 )
-        console.log('device removed successfully')
-    else
-        console.log("Sorry, the device doesn't exist" )
+    var jsonObj = {all_data : all_devices_tree}
+
 
     console.log(all_devices_tree)
 
@@ -161,7 +136,6 @@ app.get('/devices_list' , (req,res) => { // this function has to be on the other
         })
     }
     else{
-
         res.render('device_list', {
             no_list : 'No devices found ' 
         })
@@ -176,6 +150,7 @@ app.get('/coords' , (req,res) => {
 
     //fetch('http://localhost:3000/coords1').then( (response) => { 
     //right one
+    //next step : try to make this function sync
     fetch('https://streaming-app-roby.herokuapp.com/coords1').then( (response) => { // qui posso accedere tranquillamente ad heroku https://streaming-app-roby.herokuapp.com/prova
     
         response.json().then( (data) => {
