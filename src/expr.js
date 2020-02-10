@@ -111,6 +111,27 @@ app.get('/receiving_device_to_add' , (req,res) => {
 //
     const install_result = install_device(all_devices_tree , req.query.first_size , req.query.second_size , req.query.ppi_size, req.query.browser , req.query.browser_version , req.query.os)
     if (install_result != 0 ){
+
+        var path = 'vboxmanage import "C:/Users/Havas Media/AppData/Local/Genymobile/Genymotion/ova/'
+
+        const os_to_import = {
+        '5.0' : 'genymotion_vbox86p_5.0_190715_221023.ova',
+        '6.0' : 'still to do',
+        '7.0' : 'still to do' ,
+        '7.1' : 'still to do' ,
+        '8.0' : 'still to do' ,
+        '9.0' : 'still to do' ,
+        '10.0' : 'still to do'
+        }
+
+        const full_name = '"'+req.query.first_size+'-'+req.query.second_size+'-'+req.query.ppi_size+'-'+req.query.browser+'-'+req.query.browser_version+req.query.os+'"'
+        path += os_to_import[req.query.os]
+        path += '" --vsys 0 --vname='+ full_name
+
+        console.log(path)
+
+        //spawn('genymotion_vbox86p_5.0_190715_221023.ova" --vsys 0  --vmname="vbox_5.0"')
+
         all_devices_tree = read_database()
 
         const {total_elements , total_string} = print_devices(all_devices_tree)
@@ -139,7 +160,33 @@ app.get('/receiving_device_to_add' , (req,res) => {
 
 app.get('/launching_device' , (req,res) => {
 
-    console.log(req.query.first)
+    //here i have to set the settings for the device on vbox
+    const full_name = '"'+req.query.first_size+'-'+req.query.second_size+'-'+req.query.ppi_size+'-'+req.query.browser+'-'+req.query.browser_version+req.query.os+'"'
+
+
+/*
+    if ('there is a file inside a directory of the dev created')
+        const base_command = 'VBoxManage modifyvm'+full_name
+        spawn(base_command+' --memory 1024 --vram 128')
+    VBoxManage modifyvm $VM --memory 1024 --vram 128 ; to change memory hd and ram --memory 1024 --vram 128 ; to change memory hd and ram
+        spawn(base_command+' --cpus 4')
+    vboxmanage modifyvm genymotion_vbox86p_6.0_190716_010406 --cpus 4 ; to change cpus to 4 
+        spawn(base_command+' --nic1 hostonly')
+    vboxmanage modifyvm genymotion_vbox86p_6.0_190716_010406 --nic1 hostonly ; to change the network settings
+        spawn(base_command+' --hostonlyadapter1 "VirtualBox Host-Only Ethernet Adapter #2"')
+    vboxmanage modifyvm "genymotion_vbox86p_6.0_190716_010406" --hostonlyadapter1 "VirtualBox Host-Only Ethernet Adapter #2" ; to change network host only
+        spawn('vboxmanage guestproperty set '+full_name+' vbox_graph_mode "'+req.query.first_size+'x'+req.query.second_size+'-'+'16"')
+    VBoxManage guestproperty set genymotion_vbox86p_6.0_190716_010406 vbox_graph_mode 840x460-16 ; for screen size resolution
+        spawn('vboxmanage guestproperty set '+full_name+' vbox_dpi "'+req.query.ppi_size+'"')
+    VBoxManage guestproperty set genymotion_vbox86p_6.0_190716_010406 vbox_dpi 560 ; for dpi ( ppi ) resolution
+
+
+    // here finished the settings, now begin running it 
+
+    spawn('player --vm-name '+full_name)
+
+*/
+    console.log(req.query.first_size)
 
     res.send({phrase : 'here i launch the device'})
 
@@ -147,7 +194,7 @@ app.get('/launching_device' , (req,res) => {
 
 // here always reading from the variable all_devices_tree
 
-app.get('/database' , (req,res) => { // this function has to be on the other server, remote one, index.js file
+app.get('/database' , (req,res) => { 
 
     all_devices_tree = read_database()
 
