@@ -17,30 +17,17 @@ const fs = require('fs')
 
 const install_device = require(__dirname+'/utils/install_device')
 const print_devices = require(__dirname+'/utils/print_devices')
+const remove_device = require (__dirname+'/utils/remove_devices')
+const read_database = require(__dirname+"/utils/reading_database")
 
 const {spawn} = require('child_process')
 
-let rawdata = fs.readFileSync(__dirname+'/utils/devices_database.json')
-/*
-fs.writeFile(__dirname + "/../../database.json", 'jsonContent', 'utf8', function (err) {
-    if (err) {
-        console.log("An error occured while writing JSON Object to File.");
-        return console.log(err);
-    }
-    console.log("JSON file has been saved.");
-})
-*/
-
 var all_devices_tree = {}
 
-all_list_devices = [] 
+var all_list_devices = [] 
 
+all_devices_tree = read_database()
 
-try{
-    all_devices_tree = JSON.parse(rawdata).all_data
-}catch(e){
-    console.log('error reading the file ')
-}
 
 
 const app = express()
@@ -80,6 +67,41 @@ app.get('/prova1',  (req,res) => {
     res.send({speriamo : 'sperem'})
 })
 
+
+app.get('/device_to_remove' , (req,res) => {
+
+    const remove_result = remove_device(all_devices_tree , req.query.first_size , req.query.second_size , req.query.ppi_size , req.query.browser , req.query.browser_version , req.query.os )
+
+    if(remove_result != 0 ){
+
+        all_devices_tree = read_database()
+        console.log(all_devices_tree)
+
+        let{total_elements , total_string } = print_devices(all_devices_tree)
+
+        console.log(total_elements)
+
+        if(total_elements.length == 0 || total_elements == undefined || total_elements == [] )
+            total_elements = 'no devices found'
+
+            console.log(total_elements)
+
+        const options = {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify( { all_data : total_elements } )
+        }
+
+        fetch('https://streaming-app-roby.herokuapp.com/receiving_data', options)
+
+    }else console.log('cannot delete the device')
+    console.log(remove_result)
+
+    res.send({risp : 'per rimuovere il device'})
+})
+
 app.get('/receiving_device_to_add' , (req,res) => {
 //here i receive the setting for setting up the device
 // this is the default string to install the new device
@@ -87,18 +109,28 @@ app.get('/receiving_device_to_add' , (req,res) => {
 // here write commands to install the device on the machine
 
 //
-    if (install_device){
-        rawdata = fs.readFileSync(__dirname+'/utils/devices_database.json');
-        try{
-            all_devices_tree = JSON.parse(rawdata).all_data
-        }catch(e){
-            console.log('error reading the file ')
-        }
+    const install_result = install_device(all_devices_tree , req.query.first_size , req.query.second_size , req.query.ppi_size, req.query.browser , req.query.browser_version , req.query.os)
+    if (install_result != 0 ){
+        all_devices_tree = read_database()
 
-        fetch('https://streaming-app-roby.herokuapp.com/refresh_pages')
+        const {total_elements , total_string} = print_devices(all_devices_tree)
 
+        all_list_devices = total_elements
+
+        const options = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify( { all_data : all_list_devices} )
+          }
+        fetch('https://streaming-app-roby.herokuapp.com/result_adding?result_adding=1' ) 
+        fetch('https://streaming-app-roby.herokuapp.com/receiving_data' , options ) 
+    
+    }else{
+        fetch('https://streaming-app-roby.herokuapp.com/result_adding?result_adding=0' ) 
+        console.log('Device already exist')
     }
-
 
     res.send({ phrase : 'sta pagina mi serve per il device setup'})
 
@@ -115,35 +147,32 @@ app.get('/launching_device' , (req,res) => {
 
 // here always reading from the variable all_devices_tree
 
-app.get('/devices_list' , (req,res) => { // this function has to be on the other server, remote one, index.js file
+app.get('/database' , (req,res) => { // this function has to be on the other server, remote one, index.js file
 
-    console.log(all_devices_tree)
+    all_devices_tree = read_database()
 
-    const {total_elements , total_string} = print_devices()
+    const{total_elements , total_string} = print_devices(all_devices_tree)
 
-    var jsonObj = {all_data : all_devices_tree}
+    if(JSON.stringify(total_elements) != JSON.stringify({}) )
+        all_list_devices = total_elements
+
+    //console.log(all_list_devices)
+
+    const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify( { all_data : all_list_devices} )
+      }
+
+    fetch('https://streaming-app-roby.herokuapp.com/receiving_data' , options ) 
 
 
-    console.log(all_devices_tree)
-
-    // here instead of printing from array, try to print from the tree object structure, so much better, so much fun
-   
-    if(Object.keys(all_devices_tree).length > 0 ){
-        console.log(all_list_devices)
-
-        res.render('device_list', {
-            lista_array : all_list_devices
-        })
-    }
-    else{
-        res.render('device_list', {
-            no_list : 'No devices found ' 
-        })
-
-    }
-
+    res.send({mex : 'here the devices list'})
 
 })
+
 
 
 app.get('/coords' , (req,res) => {

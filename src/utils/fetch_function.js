@@ -18,13 +18,13 @@ const my_fetch = (url_string , get_post , parameter , parameter_value ) => {
 
         }
 
-        fetch(build_string)
+        return fetch(build_string)
 
     }
 
     // here with post method .. parameter = options
 
-    fetch ( build_string , parameter)
+    return fetch ( build_string , parameter)
 
 }
 

@@ -1,17 +1,4 @@
-const fs = require('fs')
 
-let rawdata = fs.readFileSync(__dirname+'/devices_database.json')
-
-
-try{
-    all_devices_tree = JSON.parse(rawdata).all_data
-}catch(e){
-    console.log('error reading the file ')
-}
-
-const print_all_devices_tree = () => {
-    return print_all_devices(all_devices_tree)
-}
 
 const print_all_devices = (all_list) => {
     const{all_elements ,  str_list } = print_partial_all_devices_tree(0 , (x) => {
@@ -63,4 +50,4 @@ const print_partial_all_devices_tree = (x , callback ,  all_list , stringa  ) =>
 }
 
 
-module.exports = print_all_devices_tree
+module.exports = print_all_devices
