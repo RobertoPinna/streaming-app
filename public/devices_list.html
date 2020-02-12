@@ -78,6 +78,7 @@
             var par_id = ''
 
             var run_device = (first , second , ppi , browser , version , os ) => {
+                console.log(first)
                 socket.emit('send_device_to_run' , first , second , ppi , browser , version , os )
                 par_id = first+'-'+second+'-'+ppi+'-'+browser+'-'+version+'-'+os
                 console.log('here the console check')
@@ -91,6 +92,7 @@
 
             // her i receive the result, if ready to run or not
             socket.on('wait_device', (wait_value) => {
+                console.log(par_id)
                 var par = document.getElementById(par_id)
                 par.style.color = 'red'
                 if(wait_value == 0)
