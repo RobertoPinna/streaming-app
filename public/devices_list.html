@@ -24,6 +24,10 @@
                 float:left;
                 margin-left: 1%;
             }
+
+            .paragraph {
+                padding:10px;
+            }
           
 
         </style>
@@ -57,7 +61,7 @@
                             
                                 <button class="button1" type="button" onclick="run_device ('{{first}}', '{{second}}' ,'{{ppi_size}}' , '{{browser}}' , '{{version}}' , '{{os}}' )"  > Run </button>
                                 <button class="button2" type="button" onclick="remove_device( '{{first}}', '{{second}}' ,'{{ppi_size}}' , '{{browser}}' , '{{version}}' , '{{os}}' )"> Remove</button>
-                                <div class="paragraph">
+                                <div class="paragraph1">
                                     <p id="{{first}}-{{second}}-{{ppi_size}}-{{browser}}-{{version}}-{{os}}">proviamoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo</p>
                                 </div>
                             </div>
@@ -66,7 +70,7 @@
                             {{/first}}
                         {{/message}}
                     </script>
-
+                    <br><br>
                     <form action="/index.html">
                         <button id="index_page">Back to homepage</button>
                     </form>
