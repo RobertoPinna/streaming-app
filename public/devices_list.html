@@ -8,6 +8,7 @@
     <head>
 
         <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/devicelist.js"></script>
         
         <style>
 
@@ -87,6 +88,7 @@
                 reload_page()
             }
 
+            // her i receive the result, if ready to run or not
             socket.on('wait_device', (wait_value) => {
                 var par = document.getElementById(par_id)
                 par.style.color = 'red'
@@ -101,7 +103,6 @@
         
             <script src="/js/mustache.min.js"></script>
             <script src="/js/moment.min.js"></script>
-            <script src="/js/devicelist.js"></script>
             <script src="/js/qs.min.js"></script>
 
         </body>
