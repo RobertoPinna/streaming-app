@@ -1,5 +1,4 @@
 
-var socket = io()
 
 const $messages = document.querySelector('#messages') // the div content  ( location to render )
 

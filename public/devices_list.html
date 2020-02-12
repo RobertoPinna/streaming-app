@@ -8,7 +8,6 @@
     <head>
 
         <script src="/socket.io/socket.io.js"></script>
-        <script src="/js/devicelist.js"></script>
         
         <style>
 
@@ -74,6 +73,8 @@
 
         <script>
 
+            const socket = io()
+
             var par_id = ''
 
             var run_device = (first , second , ppi , browser , version , os ) => {
@@ -100,7 +101,8 @@
                 }
             })
         </script>
-        
+
+            <script src="/js/devicelist.js"></script>
             <script src="/js/mustache.min.js"></script>
             <script src="/js/moment.min.js"></script>
             <script src="/js/qs.min.js"></script>
