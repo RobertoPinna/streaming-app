@@ -33,6 +33,7 @@ vboxmanage import "C:\Users\Havas Media\AppData\Local\Genymobile\Genymotion\ova\
 vboxmanage import "C:\Users\Havas Media\AppData\Local\Genymobile\Genymotion\ova\genymotion_vbox86p_9.0_190715_123003.ova" --vsys 0  --vmname="vbox_5.0"
 
 
+player --vm-name genymotion_vbox86p_6.0_190716_010406
 
 
 for deleting... 

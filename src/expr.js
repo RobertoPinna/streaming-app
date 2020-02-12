@@ -11,7 +11,7 @@ const socketio = require('socket.io')
 const hbs = require('hbs')
 const fetch = require('node-fetch')
 var cors = require('cors')
-//const robot = require('robotjs')
+const robot = require('robotjs')
 const d3 = require('d3-scale')
 const fs = require('fs')
 
@@ -21,7 +21,8 @@ const remove_device = require (__dirname+'/utils/remove_devices')
 const read_database = require(__dirname+"/utils/reading_database")
 
 const {spawn} = require('child_process')
-
+const execSync = require('child_process').execSync
+const exec = require('child_process').exec
 var all_devices_tree = {}
 
 var all_list_devices = [] 
@@ -63,7 +64,7 @@ app.use(cors())
 app.options('*', cors())
 
 app.get('/prova1',  (req,res) => {
-    //robot.moveMouse( scale_x(req.query.x_pos) , scale_y(req.query.y_pos) )
+    robot.moveMouse( scale_x(req.query.x_pos) , scale_y(req.query.y_pos) )
     res.send({speriamo : 'sperem'})
 })
 
@@ -74,6 +75,25 @@ app.get('/device_to_remove' , (req,res) => {
 
     if(remove_result != 0 ){
 
+        const full_name = req.query.first_size+'-'+req.query.second_size+'-'+req.query.ppi_size+'-'+req.query.browser+'-'+req.query.browser_version+'-'+req.query.os
+
+        var string_script = 'VBoxManage modifyvm "'+full_name+'" --hdb none\n'
+        
+        string_script += 'VBoxManage modifyvm "'+full_name+'" --hdd none\n'
+        
+        string_script += 'VBoxManage unregistervm "'+full_name+'" --delete'
+
+        fs.writeFileSync(__dirname + "/../../streaming-app-script/remove_device.bat", string_script, 'utf8', function (err) {
+            if (err) {
+                console.log("An error occured while writing JSON Object to File.")
+                return console.log(err);
+            }
+            console.log("Script file has been saved.")
+
+        })
+
+        spawn(__dirname+'/../../streaming-app-script/remove_device.bat')
+
         all_devices_tree = read_database()
         console.log(all_devices_tree)
 
@@ -82,7 +102,7 @@ app.get('/device_to_remove' , (req,res) => {
         console.log(total_elements)
 
         if(total_elements.length == 0 || total_elements == undefined || total_elements == [] )
-            total_elements = 'no devices found'
+            total_elements = 'last device removed'
 
             console.log(total_elements)
 
@@ -112,7 +132,10 @@ app.get('/receiving_device_to_add' , (req,res) => {
     const install_result = install_device(all_devices_tree , req.query.first_size , req.query.second_size , req.query.ppi_size, req.query.browser , req.query.browser_version , req.query.os)
     if (install_result != 0 ){
 
-        var path = 'vboxmanage import "C:/Users/Havas Media/AppData/Local/Genymobile/Genymotion/ova/'
+
+        //vboxmanage import "C:\\Users\\HavasMedia\\AppData\\Local\\Genymobile\\Genymotion\\ova\\genymotion_vbox86p_5.0_190715_221023.ova" --vsys 0 --vmname="Google Nexus 9" --cpus 4 --memory 1024 --unit 10 --disk "C:\\Users\\HavasMedia\\AppData\\Local\\Genymobile\\Genymotion\\deployed\\Google Nexus 9\\android_system_disk.vmdk" --unit 11 --disk "C:\\Users\\HavasMedia\\AppData\\Local\\Genymobile\\Genymotion\\deployed\\Google Nexus 9\\android_data_disk.vmdk" --unit 12 --disk "C:\\Users\\HavasMedia\\AppData\\Local\\Genymobile\\Genymotion\\deployed\\Google Nexus 9\\android_sdcard_disk.vmdk"
+
+        var path = 'vboxmanage import "C:/Users/HavasMedia/AppData/Local/Genymobile/Genymotion/ova/'
 
         const os_to_import = {
         '5.0' : 'genymotion_vbox86p_5.0_190715_221023.ova',
@@ -124,13 +147,22 @@ app.get('/receiving_device_to_add' , (req,res) => {
         '10.0' : 'still to do'
         }
 
-        const full_name = '"'+req.query.first_size+'-'+req.query.second_size+'-'+req.query.ppi_size+'-'+req.query.browser+'-'+req.query.browser_version+req.query.os+'"'
-        path += os_to_import[req.query.os]
-        path += '" --vsys 0 --vname='+ full_name
+        const full_name = req.query.first_size+'-'+req.query.second_size+'-'+req.query.ppi_size+'-'+req.query.browser+'-'+req.query.browser_version+'-'+req.query.os
+        path += os_to_import[req.query.os] +'"'
+        path += ' --vsys 0 --vmname="'+ full_name+'" --cpus 4 --memory 1024 --unit 10 --disk "C:/Users/HavasMedia/AppData/Local/Genymobile/Genymotion/deployed/'+full_name+'/android_system_disk.vmdk" --unit 11 --disk "C:/Users/HavasMedia/AppData/Local/Genymobile/Genymotion/deployed/'+full_name+'/android_data_disk.vmdk" --unit 12 --disk "C:/Users/HavasMedia/AppData/Local/Genymobile/Genymotion/deployed/'+full_name+'/android_sdcard_disk.vmdk"'
 
         console.log(path)
 
-        //spawn('genymotion_vbox86p_5.0_190715_221023.ova" --vsys 0  --vmname="vbox_5.0"')
+        fs.writeFileSync(__dirname + "/../../streaming-app-script/import.bat", path, 'utf8', function (err) {
+            if (err) {
+                console.log("An error occured while writing JSON Object to File.")
+                return console.log(err);
+            }
+            console.log("Script file has been saved.")
+
+        })
+
+        spawn(__dirname+'/../../streaming-app-script/import.bat')
 
         all_devices_tree = read_database()
 
@@ -161,32 +193,78 @@ app.get('/receiving_device_to_add' , (req,res) => {
 app.get('/launching_device' , (req,res) => {
 
     //here i have to set the settings for the device on vbox
-    const full_name = '"'+req.query.first_size+'-'+req.query.second_size+'-'+req.query.ppi_size+'-'+req.query.browser+'-'+req.query.browser_version+req.query.os+'"'
+    const full_name = req.query.first_size+'-'+req.query.second_size+'-'+req.query.ppi_size+'-'+req.query.browser+'-'+req.query.browser_version+'-'+req.query.os
+
+     //building the settings for device
+
+    
+    const path_to_check = 'C:/Users/HavasMedia/VirtualBox VMs/'+full_name+'/'+full_name+'.vbox'
+    console.log(path_to_check)
+
+    try {
+        if (fs.existsSync(path_to_check)) {
+            //file exists
+
+            var script_text = 'vboxmanage storageattach "'+full_name+'" --storagectl IDEController --port 1 --device 0 --medium none\n'
+            script_text += 'vboxmanage createhd --filename "C:/Users/HavasMedia/VirtualBox VMs/'+full_name+'/sdcard.vdi" --size 8192 --format VDI\n'
+            script_text += 'vboxmanage storageattach "'+full_name+'" --storagectl IDEController --port 1 --device 0 --type hdd --medium "C:/Users/HavasMedia/VirtualBox VMs/'+full_name+'/sdcard.vdi"\n'
+            script_text += 'vboxmanage setproperty machinefolder "C:/Users/HavasMedia/VirtualBox VMs"\n'
+            script_text += 'vboxmanage modifyvm "'+full_name+'" --nic1 hostonly\n'
+            script_text += 'vboxmanage modifyvm "'+full_name+'" --hostonlyadapter1 "VirtualBox Host-Only Ethernet Adapter #3"\n'
+            script_text += 'vboxmanage modifyvm "'+full_name+'" --nictype1 virtio\n'
+            script_text += 'vboxmanage modifyvm "'+full_name+'" --cableconnected1 on\n'
+            script_text += 'vboxmanage modifyvm "'+full_name+'" --nic2 nat\n'
+            script_text += 'vboxmanage guestproperty set "'+full_name+'" genymotion_player_version 1\n'
+            script_text += 'vboxmanage guestproperty enumerate "'+full_name+'"\n'
+            script_text += 'vboxmanage showvminfo --machinereadable "'+full_name+'"\n'
+            script_text += 'vboxmanage guestproperty set "'+full_name+'" datadisk_size 8192\n'
+            script_text += 'vboxmanage guestproperty set "'+full_name+'" sensor_camera 1\n'
+            script_text += 'vboxmanage guestproperty set "'+full_name+'" sensor_gyro 1\n'
+            script_text += 'vboxmanage guestproperty set "'+full_name+'" genymotion_platform p\n'
+            script_text += 'vboxmanage guestproperty set "'+full_name+'" android_version 5.0.0\n'
+            script_text += 'vboxmanage guestproperty set "'+full_name+'" genymotion_version 2.14.0\n'
+            // and here custom settings
+            script_text += 'vboxmanage guestproperty set "'+full_name+'" vbox_graph_mode '+req.query.first_size+'x'+req.query.second_size+'-16\n'
+            script_text += 'vboxmanage guestproperty set "'+full_name+'" vbox_dpi "'+req.query.ppi_size+'"\n'
+            script_text += 'vboxmanage guestproperty set "'+full_name+'" genymotion_force_navbar 1\n'
+            script_text += 'vboxmanage guestproperty set "'+full_name+'" genymotion_full_screen no\n'
+            script_text += 'vboxmanage guestproperty set "'+full_name+'" vkeyboard_mode 0'
+
+            //write this text to this script file
+
+            fs.writeFileSync(__dirname + "/../../streaming-app-script/settings.bat", script_text, 'utf8', function (err) {
+                if (err) {
+                    console.log("An error occured while writing JSON Object to File.")
+                    return console.log(err);
+                }
+                console.log("Script file has been saved.")
+
+            })
+
+            spawn(__dirname+'/../../streaming-app-script/settings.bat')
+
+
+            console.log(script_text)
+            fetch('https://streaming-app-roby.herokuapp.com/wait_device?wait_value=1')
+            exec('player --vm-name "'+full_name+'"')
+        }
+        else
+        { 
+            console.log('device not ready yet, try again in a bit')
+            fetch('https://streaming-app-roby.herokuapp.com/wait_device?wait_value=0')
+
+        }
+
+    } catch(err) {
+        console.error(err)
+    }
 
 
 /*
-    if ('there is a file inside a directory of the dev created')
-        const base_command = 'VBoxManage modifyvm'+full_name
-        spawn(base_command+' --memory 1024 --vram 128')
-    VBoxManage modifyvm $VM --memory 1024 --vram 128 ; to change memory hd and ram --memory 1024 --vram 128 ; to change memory hd and ram
-        spawn(base_command+' --cpus 4')
-    vboxmanage modifyvm genymotion_vbox86p_6.0_190716_010406 --cpus 4 ; to change cpus to 4 
-        spawn(base_command+' --nic1 hostonly')
-    vboxmanage modifyvm genymotion_vbox86p_6.0_190716_010406 --nic1 hostonly ; to change the network settings
-        spawn(base_command+' --hostonlyadapter1 "VirtualBox Host-Only Ethernet Adapter #2"')
-    vboxmanage modifyvm "genymotion_vbox86p_6.0_190716_010406" --hostonlyadapter1 "VirtualBox Host-Only Ethernet Adapter #2" ; to change network host only
-        spawn('vboxmanage guestproperty set '+full_name+' vbox_graph_mode "'+req.query.first_size+'x'+req.query.second_size+'-'+'16"')
-    VBoxManage guestproperty set genymotion_vbox86p_6.0_190716_010406 vbox_graph_mode 840x460-16 ; for screen size resolution
-        spawn('vboxmanage guestproperty set '+full_name+' vbox_dpi "'+req.query.ppi_size+'"')
-    VBoxManage guestproperty set genymotion_vbox86p_6.0_190716_010406 vbox_dpi 560 ; for dpi ( ppi ) resolution
-
-
-    // here finished the settings, now begin running it 
-
     spawn('player --vm-name '+full_name)
 
 */
-    console.log(req.query.first_size)
+    //console.log(req.query.first_size)
 
     res.send({phrase : 'here i launch the device'})
 
@@ -259,7 +337,7 @@ app.get('/coords' , (req,res) => {
 
 app.get('/click' , (req,res) => {
     res.send('scriviamo qualcosa')
-    //robot.mouseClick()
+    robot.mouseClick()
 })
  
 

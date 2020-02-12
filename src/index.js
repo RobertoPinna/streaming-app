@@ -116,10 +116,16 @@ io.on('connection' , (socket) => { // when someone connect to server
 
     app.get('/result_adding' , (req , res) => {
         socket.broadcast.emit('sending_result_adding' , req.query.result_adding )
+        res.send({})
     })
 
     app.get('/refresh_pages' , (req,res ) => {
         socket.broadcast.emit('refresh_page') 
+        res.send({})
+    })
+
+    app.get('/wait_device', (req,res) => {
+        socket.broadcast.emit('wait_device',req.query.wait_value)
         res.send({})
     })
 
