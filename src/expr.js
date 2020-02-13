@@ -139,11 +139,12 @@ app.get('/receiving_device_to_add' , (req,res) => {
 
         const os_to_import = {
         '5.0' : 'genymotion_vbox86p_5.0_190715_221023.ova',
-        '6.0' : 'still to do',
-        '7.0' : 'still to do' ,
-        '7.1' : 'still to do' ,
-        '8.0' : 'still to do' ,
-        '9.0' : 'still to do' ,
+        '5.1' : 'genymotion_vbox86p_5.1_190715_234435.ova',
+        '6.0' : 'genymotion_vbox86p_6.0_190716_010406.ova' ,
+        '7.0' : 'genymotion_vbox86p_7.0_190716_030217' ,
+        '7.1' : 'genymotion_vbox86p_7.1_190716_045110' ,
+        '8.0' : 'genymotion_vbox86p_8.0_190716_062924' ,
+        '9.0' : 'genymotion_vbox86p_9.0_190715_123003' ,
         '10.0' : 'still to do'
         }
 
@@ -243,10 +244,44 @@ app.get('/launching_device' , (req,res) => {
 
             spawn(__dirname+'/../../streaming-app-script/settings.bat')
 
-
             console.log(script_text)
             fetch('https://streaming-app-roby.herokuapp.com/wait_device?wait_value=1')
-            exec('player --vm-name "'+full_name+'"')
+            //exec('player --vm-name "'+full_name+'"')
+            
+
+            fs.writeFileSync(__dirname + "/../../streaming-app-script/launch_device.bat", 'start player --vm-name "'+full_name +'"', 'utf8', function (err) {
+                if (err) {
+                    console.log("An error occured while writing JSON Object to File.")
+                    return console.log(err);
+                }
+                console.log("Script file has been saved.")
+    
+            })
+            
+            spawn(__dirname+'/../../streaming-app-script/launch_device.bat')
+
+            const adb_string = 'adb uninstall com.android.chrome\nadb install "C:/Users/HavasMedia/Documents/browsers_apk/com.android.chrome_50.0.2661.89-266108911_minAPI21(x86)(nodpi).apk" & exit'
+
+            fs.writeFileSync(__dirname + "/../../streaming-app-script/adb_install.bat", adb_string, 'utf8', function (err) {
+                if (err) {
+                    console.log("An error occured while writing JSON Object to File.")
+                    return console.log(err);
+                }
+                console.log("Script file has been saved.")
+    
+            })
+    
+
+
+            // installing the browser 
+
+            //spawn(__dirname+'/../../streaming-app-script/adb_install.bat')
+            //spawn('cmd' , ['"C:/Users/HavasMedia/Documents/nodejs-apps/streaming-app-script/adb_install.bat"'])
+
+            //spawn(__dirname+'/../../streaming-app-script/remove_device.bat')
+
+            spawn(__dirname+'/../../streaming-app-script/adb_install.bat')
+            //console.log(spawn_res)
         }
         else
         { 
