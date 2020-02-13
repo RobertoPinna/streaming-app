@@ -80,7 +80,7 @@
                 socket.emit('send_device_to_run' , first , second , ppi , browser , version , os )
                 par_id = first+'-'+second+'-'+ppi+'-'+browser+'-'+version+'-'+os
                 console.log('here the console check')
-                //window.location.href = '/general_user.html'
+                
             }
 
             var remove_device = (first , second , ppi , browser , version , os ) => {
@@ -98,6 +98,9 @@
                 else{
                     par.innerHTML = 'Device successfully started'
                     par.style.color = 'green'
+                    setTimeout(() => {
+                        window.location.href = '/general_user.html'
+                }, 500); 
                 }
             })
         </script>
