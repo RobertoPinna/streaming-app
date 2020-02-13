@@ -11,17 +11,16 @@
         
         <style>
 
-            
-
-            #messages{
-                display: table;
-                width: 50%;
-                table-layout: fixed;
-                border-spacing: 10px;
-            }
-            .flex{
+             .button1 , .button2 , .paragraph {
                 display: table-cell;
                 background-color: red;
+             }
+
+            .flex{
+                display: table;
+                width: 100%;
+                table-layout: fixed;
+                border-spacing: 10px;
             }
 
         </style>
@@ -44,29 +43,25 @@
                             {{^first}}<p>No devices found </p>{{/first}}
 
                             {{#first}}
-                            <div class="flex">
-                                
-                                <p id="list_row">
-                                  {{first}} - {{second}} - {{ppi_size}} - {{browser}} - {{version}} - {{os}} 
-                                </p>
-                            </div>
-
-                            <div class="flex">
-                                <button class="button1" type="button" onclick="run_device ('{{first}}', '{{second}}' ,'{{ppi_size}}' , '{{browser}}' , '{{version}}' , '{{os}}' )"  > Run </button>
-                                <button class="button2" type="button" onclick="remove_device( '{{first}}', '{{second}}' ,'{{ppi_size}}' , '{{browser}}' , '{{version}}' , '{{os}}' )"> Remove</button>
-                                <div class="flex">
-                                    <p id="{{first}}-{{second}}-{{ppi_size}}-{{browser}}-{{version}}-{{os}}">provaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                            <div class="flex">  
+                                <div class="paragraph">
+                                    
+                                    <p id="list_row">
+                                    {{first}} - {{second}} - {{ppi_size}} - {{browser}} - {{version}} - {{os}} 
+                                    </p>
                                 </div>
+                                    <button class="button1" type="button" onclick="run_device ('{{first}}', '{{second}}' ,'{{ppi_size}}' , '{{browser}}' , '{{version}}' , '{{os}}' )"  > Run </button>
+                                    <button class="button2" type="button" onclick="remove_device( '{{first}}', '{{second}}' ,'{{ppi_size}}' , '{{browser}}' , '{{version}}' , '{{os}}' )"> Remove</button>
+                                    <div class="paragraph">
+                                        <p id="{{first}}-{{second}}-{{ppi_size}}-{{browser}}-{{version}}-{{os}}">provaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                                    </div>
                             </div>
                
                         <br><br>
                             {{/first}}
                         {{/message}}
-
                     </script>
-
                     <br><br>
-
                     <form action="/index.html">
                         <button id="index_page">Back to homepage</button>
                     </form>
