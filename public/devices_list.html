@@ -25,6 +25,17 @@
                 margin-right : 60%;
             }
 
+            #messages{
+                display: table;
+                width: 50%;
+                table-layout: fixed;
+                border-spacing: 10px;
+            }
+            .paragraph , .flex{
+                display: table-cell;
+                background-color: red;
+            }
+
         </style>
 
         
@@ -63,7 +74,10 @@
                         <br><br>
                             {{/first}}
                         {{/message}}
+
                     </script>
+
+                    <br><br>
 
                     <form action="/index.html">
                         <button id="index_page">Back to homepage</button>
