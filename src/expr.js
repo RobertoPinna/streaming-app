@@ -258,9 +258,9 @@ app.get('/launching_device' , (req,res) => {
     
             })
             
-            spawn(__dirname+'/../../streaming-app-script/launch_device.bat')
+            //spawn(__dirname+'/../../streaming-app-script/launch_device.bat')
 
-            const adb_string = 'adb uninstall com.android.chrome\nadb install "C:/Users/HavasMedia/Documents/browsers_apk/com.android.chrome_50.0.2661.89-266108911_minAPI21(x86)(nodpi).apk" & exit'
+            const adb_string = 'adb uninstall com.android.chrome\nadb install "C:/Users/HavasMedia/Documents/browsers_apk/com.android.chrome_50.0.2661.89-266108911_minAPI21(x86)(nodpi).apk"'
 
             fs.writeFileSync(__dirname + "/../../streaming-app-script/adb_install.bat", adb_string, 'utf8', function (err) {
                 if (err) {
@@ -280,7 +280,17 @@ app.get('/launching_device' , (req,res) => {
 
             //spawn(__dirname+'/../../streaming-app-script/remove_device.bat')
 
-            spawn(__dirname+'/../../streaming-app-script/adb_install.bat')
+            const process = spawn(__dirname+'/../../streaming-app-script/launch_device.bat')
+
+            setTimeout(() => {
+                const prova = spawn(__dirname+'/../../streaming-app-script/new_prova.bat')
+                console.log('mbhe?')
+            }, 10000);
+            
+
+            process.on('exit', (code) => {
+                console.log("Child exited");
+            })
             //console.log(spawn_res)
         }
         else
